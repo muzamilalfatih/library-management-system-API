@@ -1,0 +1,87 @@
+# Build output
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+*.log
+
+# VS-specific files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Resharper & Rider
+_ReSharper*/
+*.DotSettings.user
+.idea/
+*.sln.iml
+
+# VS Code
+.vscode/
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+project.lock.json
+project.assets.json
+*.deps.json
+*.nuspec
+
+# MSBuild
+*.binlog
+
+# Entity Framework
+Migrations/
+
+# Test results
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+*.codecoverage
+
+# Publish output
+publish/
+out/
+artifacts/
+
+# Azure build files
+*.azurePubxml
+*.publishproj
+
+# Windows junk
+Thumbs.db
+ehthumbs.db
+desktop.ini
+.DS_Store
+
+# Backup and temp
+*.bak
+*.tmp
+*.old
+
+# Local DB
+*.mdf
+*.ldf
+
+# Secrets (optional – ignore if you're tracking dev configs)
+appsettings.Development.json
+secrets.json
+
+# Optional: per-project layer ignore (uncomment if needed)
+# API/
+# Business/
+# DataAccess/
+# Shared/
+
+# Layer-specific obj/bin
+/LibraryManagementSystemAPIBussinesLayer/bin/
+/LibraryManagementSystemAPIBussinesLayer/obj/
+/LibraryManagementSystemAPIBussinesLayer/bin/
+/LibraryManagementSystemAPIBussinesLayer/obj/
+/LibraryManagementSystemAPIDataAccessLayer/bin/
+/LibraryManagementSystemAPIDataAccessLayer/obj/
+/SharedClasses/bin/
+/SharedClasses/obj/
