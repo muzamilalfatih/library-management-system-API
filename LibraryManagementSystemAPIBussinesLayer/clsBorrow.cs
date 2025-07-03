@@ -18,7 +18,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             if (BorrowID <= 0)
             {
-                return new Result<FullBorrowDTO>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, null, 400);
+                return new Result<FullBorrowDTO>(false, "The request is invalid. Please check the input and try again.", null, 400);
             }
             return await clsBorrowData.GetBorrowInfoByIDAsync(BorrowID);
         }
@@ -27,7 +27,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             if (CopyID <= 0)
             {
-                return new Result<FullBorrowDTO>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, null, 400);
+                return new Result<FullBorrowDTO>(false, "The request is invalid. Please check the input and try again.", null, 400);
             }
             return await clsBorrowData.GetBorrowInfoByCopyIDAsync(CopyID);
         }
@@ -36,7 +36,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             if (returnBookDTO.BorrowID <= 0 || returnBookDTO.ReturnNotes == "" || returnBookDTO.ReturnedByUserID <= 0)
             {
-                return new Result<ReturnedBookDTO>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, null, 400);
+                return new Result<ReturnedBookDTO>(false, "The request is invalid. Please check the input and try again.", null, 400);
             }
             Result<FullBorrowDTO> result = await FindAsync(returnBookDTO.BorrowID);
             if (!result.Success)
@@ -46,7 +46,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
 
             if (result.Data.ReturnDate != null)
             {
-                return new Result<ReturnedBookDTO>(false, new { error = new { header = "Book Already Returned", body = $"This book is already returned on {result.Data.ReturnDate}" } }, null, 422);
+                return new Result<ReturnedBookDTO>(false, $"This book is already returned on {result.Data.ReturnDate}", null, 422);
             }
             return await clsBorrowData.ReturnBookAsync(returnBookDTO);
         }
@@ -55,7 +55,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             if (borrowDTO.MemberID <= 0 || borrowDTO.BookID <= 0 || borrowDTO.PaidFees <= 0 || borrowDTO.CreatedByUserID <= 0 || borrowDTO.DueDate <= DateTime.Now)
             {
-                return new Result<BorrowedBookDTO>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, null, 400);
+                return new Result<BorrowedBookDTO>(false, "The request is invalid. Please check the input and try again.", null, 400);
             }
 
             Result<clsMember> memberResult = await clsMember.FindAsync(borrowDTO.MemberID);

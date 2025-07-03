@@ -40,7 +40,7 @@ namespace LibraryManagementSystemAPIDataAccessLayer
         {
             if (string.IsNullOrEmpty(CategoryName))
             {
-                return new Result<int>(false, new { error = new { header = "Bad Request", body = "Category name must have a value." } }, -1, 400);
+                return new Result<int>(false, "Category name must have a value.", -1, 400);
             }
             return await clsBookCategoryData.GetCategoryIDByNameAsync(CategoryName);
         }
@@ -48,7 +48,7 @@ namespace LibraryManagementSystemAPIDataAccessLayer
         {
             if (CategoryID <= 0)
             {
-                return new Result<string>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, "", 400);
+                return new Result<string>(false, "The request is invalid. Please check the input and try again.", "", 400);
             }
             return await clsBookCategoryData.GetCategoryNameByIDAsync(CategoryID);
         }
@@ -57,13 +57,13 @@ namespace LibraryManagementSystemAPIDataAccessLayer
         {
             if (CategoryID <= 0)
             {
-                return new Result<clsBookCategory>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, null, 400);
+                return new Result<clsBookCategory>(false, "The request is invalid. Please check the input and try again.", null, 400);
             }
 
             Result<BookCategoryDTO> result = await clsBookCategoryData.GetCategoryInfoByIDAsync(CategoryID);
             if (result.Success)
             {
-                return new Result<clsBookCategory>(true, new { success = new { header = "Success", body = "Book category retrieved successfully." } }, new clsBookCategory(result.Data, enMode.Update));
+                return new Result<clsBookCategory>(true, "Book category retrieved successfully.", new clsBookCategory(result.Data, enMode.Update));
             }
             return new Result<clsBookCategory>(result.Success, result.Message, null, result.ErrorCode);
         }
@@ -84,7 +84,7 @@ namespace LibraryManagementSystemAPIDataAccessLayer
         {
             if (this.CategoryName == string.Empty)
             {
-                return new Result<int>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, -1, 400);
+                return new Result<int>(false, "The request is invalid. Please check the input and try again.", -1, 400);
             }
             switch (_Mode)
             {
@@ -101,7 +101,7 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                     return await _UpdateCategoryAsync();
 
                 default:
-                    return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                    return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
             }
         }
 

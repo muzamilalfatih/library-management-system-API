@@ -12,7 +12,7 @@ using SharedClasses;
 
 namespace LibraryManagementSystemAPIDataAccessLayer
 {
-    
+   
     public class clsAuthorData
     {
         public static async Task<Result<AuthorDTO>> GetAuthorInfoByIDAsync(int AuthorID)
@@ -39,17 +39,17 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                                 }
                                 DateTime createdDate = reader.GetDateTime(reader.GetOrdinal("CreatedDate"));
                                 AuthorDTO author = new AuthorDTO(authorID, personID, createdDate,result.Data );
-                                return new Result<AuthorDTO>(true, new { success = new { header = "Success", body = "Author retrieved successfully." } }, author);
+                                return new Result<AuthorDTO>(true, "Author retrieved successfully.", author);
                             }
                             else
                             {
-                                return new Result<AuthorDTO>(false, new { error = new { header = "Not Found", body = "Author not found." } }, null, 404);
+                                return new Result<AuthorDTO>(false, "Author not found.", null, 404);
                             }
                         }
                     }
                     catch (Exception ex)
                     {
-                        return new Result<AuthorDTO>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, null, 500);
+                        return new Result<AuthorDTO>(false, "An unexpected error occurred on the server.", null, 500);
                     }
                 }
             }
@@ -77,7 +77,7 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                     AuthorID = (int)returnedValue.Value;
                     if (AuthorID > 0)
                     {
-                        return new Result<int>(true, new { success = new { header = "Success", body = "Author added successfully." } }, AuthorID);
+                        return new Result<int>(true, "Author added successfully.", AuthorID);
                     }
                     else
                     {
@@ -86,7 +86,7 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                 }
                 catch (Exception ex)
                 {
-                    return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                    return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                 }
             }
         }
@@ -106,16 +106,16 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         rowsAffected = await command.ExecuteNonQueryAsync();
                         if (rowsAffected > 0)
                         {
-                            return new Result<bool>(true, new { success = new { header = "Success", body = "Author deleted successfully." } }, true);
+                            return new Result<bool>(true, "Author deleted successfully.", true);
                         }
                         else
                         {
-                            return new Result<bool>(false, new { error = new { header = "Not Found", body = "Author not found." } }, false, 404);
+                            return new Result<bool>(false, "Author not found.", false, 404);
                         }
                     }
                     catch (Exception ex)
                     {
-                        return new Result<bool>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, false, 500);
+                        return new Result<bool>(false, "An unexpected error occurred on the server.", false, 500);
                     }
                 }
             }
@@ -148,13 +148,13 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         }
                         if (authorList.Count == 0)
                         {
-                            return new Result<List<AuthorViewDTO>>(false, new { error = new { header = "Not Found", body = "No authors found." } }, authorList, 404);
+                            return new Result<List<AuthorViewDTO>>(false, "No authors found.", authorList, 404);
                         }
                         return new Result<List<AuthorViewDTO>>(true, "Authors retrieved successfully.", authorList);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<List<AuthorViewDTO>>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, authorList, 500);
+                        return new Result<List<AuthorViewDTO>>(false, "An unexpected error occurred on the server.", authorList, 500);
                     }
                 }
             }
@@ -177,11 +177,11 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         {
                             AuthorName = result.ToString();
                         }
-                        return new Result<string>(true, new { success = new { header = "Success", body = "Name retrieved successfully." } }, AuthorName);
+                        return new Result<string>(true, "Name retrieved successfully.", AuthorName);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<string>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, "", 500);
+                        return new Result<string>(false, "An unexpected error occurred on the server.", "", 500);
                     }
                 }
             }
@@ -204,7 +204,7 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         {
                             AuthorID = NewAuthorID;
                         }
-                        return new Result<int>(true, new { success = new { header = "Success", body = "Author ID retrieved successfully." } }, AuthorID);
+                        return new Result<int>(true, "Author ID retrieved successfully.", AuthorID);
                     }
                     catch (Exception ex)
                     {
@@ -230,7 +230,7 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         {
                             TotalAuthors = authorCount;
                         }
-                        return new Result<int>(true, new { success = new { header = "Success", body = "Total authors retrieved successfully." } }, TotalAuthors);
+                        return new Result<int>(true, "Total authors retrieved successfully.", TotalAuthors);
                     }
                     catch (Exception ex)
                     {

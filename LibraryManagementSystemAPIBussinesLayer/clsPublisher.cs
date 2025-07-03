@@ -43,7 +43,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
             {
                 return new Result<clsPublisher>(
                     false,
-                    new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } },
+                    "The request is invalid. Please check the input and try again.",
                     null,
                     400
                 );
@@ -80,7 +80,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
             {
                 return new Result<bool>(
                     false,
-                    new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } },
+                    "The request is invalid. Please check the input and try again.",
                     false,
                     400
                 );
@@ -133,7 +133,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
                 default:
                     return new Result<int>(
                         false,
-                        new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } },
+                        "An unexpected error occurred on the server.",
                         -1,
                         500
                     );

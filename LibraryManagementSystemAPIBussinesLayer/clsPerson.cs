@@ -69,7 +69,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             if (PersonID <= 0)
             {
-                return new Result<clsPerson>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, null, 400);
+                return new Result<clsPerson>(false, "The request is invalid. Please check the input and try again.", null, 400);
             }
 
             Result<PersonDTO> result = await clsPersonData.GetPersonInfoByIDAsync(PersonID); // Async call
@@ -98,7 +98,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
                 IsValidEmail(personDTO.Email) ||
                 string.IsNullOrEmpty(personDTO.Phone))
             {
-                return new Result<bool>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, false, 400);
+                return new Result<bool>(false, "The request is invalid. Please check the input and try again.", false, 400);
             }
             Result<bool> result = await clsPersonData.IsPersonExistAsync(personDTO.NationalNo);
             if (!result.Success)
@@ -107,9 +107,9 @@ namespace LibraryManagementSystemAPIBussinesLayer
             }
             if (result.Data)
             {
-                return new Result<bool>(false, new { error = new { header = "Bad Request", body = "This national number is used by another person" } }, false, 400);
+                return new Result<bool>(false, "This national number is used by another person", false, 400);
             }
-            return new Result<bool>(true, new { success = new { header = "Success", body = "Data validattion completed" } }, true);
+            return new Result<bool>(true, "Data validattion completed", true);
         }
         public static async Task<Result<bool>> ValidateDataAsync(PersonDTO personDTO, string currentNationalNumber)
         {
@@ -121,7 +121,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
                 IsValidEmail(personDTO.Email) ||
                 string.IsNullOrEmpty(personDTO.Phone))
             {
-                return new Result<bool>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, false, 400);
+                return new Result<bool>(false, "The request is invalid. Please check the input and try again.", false, 400);
             }
             if (personDTO.NationalNo != currentNationalNumber)
             {
@@ -132,10 +132,10 @@ namespace LibraryManagementSystemAPIBussinesLayer
                 }
                 if (result.Data)
                 {
-                    return new Result<bool>(false, new { error = new { header = "Bad Request", body = "This national number is used by another person" } }, false, 400);
+                    return new Result<bool>(false, "This national number is used by another person", false, 400);
                 }
             }          
-            return new Result<bool>(true, new { success = new { header = "Success", body = "Data validattion completed" } }, true);
+            return new Result<bool>(true, "Data validattion completed", true);
         }
         private async Task<Result<int>> _AddNewPersonAsync()
         {
@@ -180,7 +180,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
                     return await _UpdatePersonAsync(); 
 
                 default:
-                    return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                    return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
             }
         }
 

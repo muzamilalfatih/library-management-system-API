@@ -40,7 +40,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             if (MemberShipClassID <= 0)
             {
-                return new Result<clsMembershipClass>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, null, 400);
+                return new Result<clsMembershipClass>(false, "The request is invalid. Please check the input and try again.", null, 400);
             }
 
             Result<MembershipClassDTO> result = await clsMembershipClassData.GetMembershipClassInfoByIDAsync(MemberShipClassID);
@@ -68,7 +68,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             if (membershipClassID <= 0)
             {
-                return new Result<bool>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, false, 400);
+                return new Result<bool>(false, "The request is invalid. Please check the input and try again.", false, 400);
             }
             Result<MembershipClassDTO> result = await clsMembershipClassData.GetMembershipClassInfoByIDAsync(membershipClassID);
             if (!result.Success)
@@ -102,7 +102,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
                     return await _UpdateMembershipClassAsync();
 
                 default:
-                    return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                    return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
             }
         }
 

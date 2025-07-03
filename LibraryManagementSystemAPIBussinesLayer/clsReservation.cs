@@ -19,7 +19,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
             {
                 return new Result<ReservationDTO>(
                     false,
-                    new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } },
+                    "The request is invalid. Please check the input and try again.",
                     null,
                     400
                 );
@@ -36,7 +36,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             return Task.FromResult(new Result<bool>(
                 true,
-                new { success = new { header = "Success", body = "All book criteria met." } },
+                "All book criteria met.",
                 true
             ));
         }
@@ -47,7 +47,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
             {
                 return new Result<int>(
                     false,
-                    new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } },
+                    "The request is invalid. Please check the input and try again.",
                     -1,
                     400
                 );
@@ -75,7 +75,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
             {
                 return new Result<int>(
                     false,
-                    new { error = new { header = "Available", body = "The book is available; go ahead and borrow it!" } },
+                    "The book is available; go ahead and borrow it!",
                     -1,
                     422
                 );
@@ -85,7 +85,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
             {
                 return new Result<int>(
                     false,
-                    new { error = new { header = "Not Allowed", body = "This member already has a reservation for this book!" } },
+                    "This member already has a reservation for this book!",
                     -1,
                     422
                 );
@@ -106,7 +106,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
             {
                 return new Result<int>(
                     false,
-                    new { error = new { header = "Not Found", body = "Reservation not found." } },
+                    "Reservation not found.",
                     -1,
                     404
                 );
@@ -116,7 +116,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
             {
                 return new Result<int>(
                     false,
-                    new { error = new { header = "Already Cancelled", body = "This reservation is already cancelled." } },
+                    "This reservation is already cancelled.",
                     -1,
                     422
                 );

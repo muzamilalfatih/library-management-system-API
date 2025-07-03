@@ -32,14 +32,14 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                                     reader.GetInt32(reader.GetOrdinal("CategoryID")),
                                     reader.GetString(reader.GetOrdinal("CategoryName"))
                                 );
-                                return new Result<BookCategoryDTO>(true, new { success = new { header = "Success", body = "Category found successfully." } }, category);
+                                return new Result<BookCategoryDTO>(true, "Category found successfully.", category);
                             }
-                            return new Result<BookCategoryDTO>(false, new { error = new { header = "Not Found", body = "Category not found." } }, null, 404);
+                            return new Result<BookCategoryDTO>(false, "Category not found.", null, 404);
                         }
                     }
                     catch (Exception ex)
                     {
-                        return new Result<BookCategoryDTO>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, null, 500);
+                        return new Result<BookCategoryDTO>(false, "An unexpected error occurred on the server.", null, 500);
                     }
                 }
             }
@@ -61,11 +61,11 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         {
                             return new Result<int>(true, "Category ID retrieved successfully.", Convert.ToInt32(result));
                         }
-                        return new Result<int>(false, new { error = new { header = "Not Found", body = "Category not found." } }, -1, 404);
+                        return new Result<int>(false, "Category not found.", -1, 404);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                        return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                     }
                 }
             }
@@ -87,11 +87,11 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         {
                             return new Result<string>(true, "Category name retrieved successfully.", result.ToString());
                         }
-                        return new Result<string>(false, new { error = new { header = "Not Found", body = "Category not found." } }, "", 404);
+                        return new Result<string>(false, "Category not found.", "", 404);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<string>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, "", 500);
+                        return new Result<string>(false, "An unexpected error occurred on the server.", "", 500);
                     }
                 }
             }
@@ -118,13 +118,13 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                     int categoryId = (int)returnValue.Value;
                     if (categoryId > 0)
                     {
-                        return new Result<int>(true, new { success = new { header = "Success", body = "Category added successfully" } }, categoryId);
+                        return new Result<int>(true, "Category added successfully", categoryId);
                     }
-                    return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                    return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                 }
                 catch (Exception ex)
                 {
-                    return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                    return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                 }
             }
         }
@@ -148,13 +148,13 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         int rowsAffected = await command.ExecuteNonQueryAsync();
                         if (rowsAffected > 0)
                         {
-                            return new Result<int>(true, new { success = new { header = "Success", body = "Category updated successfully." } }, rowsAffected);
+                            return new Result<int>(true, "Category updated successfully.", rowsAffected);
                         }
-                        return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                        return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                        return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                     }
                 }
             }
@@ -174,13 +174,13 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         int rowsAffected = await command.ExecuteNonQueryAsync();
                         if (rowsAffected > 0)
                         {
-                            return new Result<bool>(true, new { success = new { header = "Success", body = "Category deleted successfully." } }, true);
+                            return new Result<bool>(true, "Category deleted successfully.", true);
                         }
-                        return new Result<bool>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, false, 500);
+                        return new Result<bool>(false, "An unexpected error occurred on the server.", false, 500);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<bool>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, false, 500);
+                        return new Result<bool>(false, "An unexpected error occurred on the server.", false, 500);
                     }
                 }
             }
@@ -206,11 +206,11 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                             ));
                         }
                     }
-                    return new Result<List<BookCategoryDTO>>(true, new { success = new { header = "Success", body = "Categories retrieved successfully." } }, allCategories);
+                    return new Result<List<BookCategoryDTO>>(true, "Categories retrieved successfully.", allCategories);
                 }
                 catch (Exception ex)
                 {
-                    return new Result<List<BookCategoryDTO>>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, allCategories, 500);
+                    return new Result<List<BookCategoryDTO>>(false, "An unexpected error occurred on the server.", allCategories, 500);
                 }
             }
         }

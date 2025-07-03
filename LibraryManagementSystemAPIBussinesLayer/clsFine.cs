@@ -18,7 +18,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             if (FineID <= 0)
             {
-                return new Result<FullFineDTO>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, null, 400);
+                return new Result<FullFineDTO>(false, "The request is invalid. Please check the input and try again.", null, 400);
             }
             return await clsFineData.GetFineInfoByIDAsync(FineID);
         }
@@ -44,7 +44,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             if (!ValidateDataAsync(ref payFineDTO))
             {
-                return new Result<bool>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, false, 400);
+                return new Result<bool>(false, "The request is invalid. Please check the input and try again.", false, 400);
             }
 
             Result<FullFineDTO> result = await FindAsync(payFineDTO.fineID);
@@ -53,11 +53,11 @@ namespace LibraryManagementSystemAPIBussinesLayer
             {
                 if (result.Data.IsPaid)
                 {
-                    return new Result<bool>(false, new { error = new { header = "Bad Request", body = "Fine already paid." } }, false, 400);
+                    return new Result<bool>(false, "Fine already paid.", false, 400);
                 }
                 if (payFineDTO.paidAmount > (result.Data.PaidAmount + result.Data.FineAmount))
                 {
-                    return new Result<bool>(false, new { error = new { header = "Bad Request", body = "The amount must be less than or equal to the fine amount." } }, false, 400);
+                    return new Result<bool>(false, "The amount must be less than or equal to the fine amount.", false, 400);
                 }
                 return await clsFineData.PayFineAsync(payFineDTO);
             }

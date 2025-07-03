@@ -10,10 +10,10 @@ namespace SharedClasses
     public class Result<T>
     {
         public bool Success { get; set; }
-        public  object Message { get; set; }
+        public  string Message { get; set; }
         public int ErrorCode { get; set; }
         public T? Data { get; set; }
-        public Result(bool success, object message, T? data = default, int errorCode = 0)
+        public Result(bool success, string message, T? data = default, int errorCode = 0)
         {
             Success = success;
             Message = message;

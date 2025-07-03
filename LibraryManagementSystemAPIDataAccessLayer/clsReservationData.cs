@@ -55,14 +55,14 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                                     GetStatusText((short)reader["ReservationStatus"]),
                                     (int)reader["CreatedByUserID"]
                                 );
-                                return new Result<ReservationDTO>(true, new { success = new { header = "Success", body = "Reservation found successfully." } }, reservationDTO);
+                                return new Result<ReservationDTO>(true, "Reservation found successfully.", reservationDTO);
                             }
-                            return new Result<ReservationDTO>(false, new { error = new { header = "Not Found", body = "Reservation not found." } }, null, 404);
+                            return new Result<ReservationDTO>(false, "Reservation not found.", null, 404);
                         }
                     }
                     catch (Exception ex)
                     {
-                        return new Result<ReservationDTO>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, null, 500);
+                        return new Result<ReservationDTO>(false, "An unexpected error occurred on the server.", null, 500);
                     }
                 }
             }
@@ -85,13 +85,13 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         object result = await command.ExecuteScalarAsync();
                         if (result != null && int.TryParse(result.ToString(), out int returnedID))
                         {
-                            return new Result<int>(true, new { success = new { header = "Success", body = "Reservation ID retrieved successfully." } }, returnedID);
+                            return new Result<int>(true, "Reservation ID retrieved successfully.", returnedID);
                         }
-                        return new Result<int>(false, new { error = new { header = "Not Found", body = "Reservation not found." } }, -1, 404);
+                        return new Result<int>(false, "Reservation not found.", -1, 404);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                        return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                     }
                 }
             }
@@ -128,13 +128,13 @@ namespace LibraryManagementSystemAPIDataAccessLayer
 
                     if (result != null && int.TryParse(result.ToString(), out int NewReservationID))
                     {
-                        return new Result<int>(true, new { success = new { header = "Success", body = "Book reserved successfully." } }, NewReservationID);
+                        return new Result<int>(true, "Book reserved successfully.", NewReservationID);
                     }
-                    return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                    return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                 }
                 catch (Exception ex)
                 {
-                    return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                    return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                 }
             }
         }
@@ -168,13 +168,13 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         {
                             reservedForMemberID = (int)ReservedForMemberID.Value;
                         }
-                        return new Result<int>(true, new { success = new { header = "Success", body = "Reservation Cancelled successfully" } }, reservedForMemberID);
+                        return new Result<int>(true, "Reservation Cancelled successfully", reservedForMemberID);
                     }
-                    return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                    return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                 }
                 catch (Exception ex)
                 {
-                    return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                    return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                 }
             }
         }
@@ -196,11 +196,11 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         await connection.OpenAsync();
                         SqlDataReader reader = await command.ExecuteReaderAsync();
                         IsFound = reader.HasRows;
-                        return new Result<bool>(true, new { success = new { header = "Success", body = "Checking completed." } }, IsFound);
+                        return new Result<bool>(true, "Checking completed.", IsFound);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<bool>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, false, 500);
+                        return new Result<bool>(false, "An unexpected error occurred on the server.", false, 500);
                     }
                 }
             }
@@ -233,12 +233,12 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         {
                             return new Result<List<ReservationViewDTO>>(true, "All books retrieved successfully.", allReservations);
                         }
-                        return new Result<List<ReservationViewDTO>>(false, new { error = new { header = "Not Found", body = "No reservation found." } }, allReservations, 404);
+                        return new Result<List<ReservationViewDTO>>(false, "No reservation found.", allReservations, 404);
                     }
                 }
                 catch (Exception ex)
                 {
-                    return new Result<List<ReservationViewDTO>>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, allReservations, 500);
+                    return new Result<List<ReservationViewDTO>>(false, "An unexpected error occurred on the server.", allReservations, 500);
                 }
             }
         }

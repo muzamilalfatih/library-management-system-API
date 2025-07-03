@@ -69,7 +69,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
             }
             membership.CreatedByUserName = userResult.Data;
             membership.MembershipClassInfo = classResult.Data;
-            return new Result<clsMembership>(true, new { success = new { header = "Success", body = "Membership object created successfully." } }, membership);
+            return new Result<clsMembership>(true, "Membership object created successfully.", membership);
         }
         public FullMembershipDTO FMSDTO
         {
@@ -90,7 +90,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             if (MembershipID <= 0)
             {
-                return new Result<clsMembership>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, null, 400);
+                return new Result<clsMembership>(false, "The request is invalid. Please check the input and try again.", null, 400);
             }
             var result = await clsMembershipData.GetMembershipByIDAsync(MembershipID);
             if (result.Success)
@@ -104,7 +104,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             if (MemberID <= 0)
             {
-                return new Result<clsMembership>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, null, 400);
+                return new Result<clsMembership>(false, "The request is invalid. Please check the input and try again.", null, 400);
             }
             var result = await clsMembershipData.GetMembershipByMemberIDAsync(MemberID);
             if (result.Success)
@@ -150,7 +150,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
                 case enMode.Update:
                     return await _UpdateMembershipAsync();
                 default:
-                    return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                    return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
             }
         }
 

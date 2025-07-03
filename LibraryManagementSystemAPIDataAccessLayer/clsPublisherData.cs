@@ -41,17 +41,17 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                                     reader.GetDateTime(reader.GetOrdinal("CreatedDate")),
                                     result.Data
                                 );
-                                return new Result<PublisherDTO>(true, new { success = new { header = "Success", body = "Publisher found successfully." } }, publisher);
+                                return new Result<PublisherDTO>(true, "Publisher found successfully.", publisher);
                             }
                             else
                             {
-                                return new Result<PublisherDTO>(false, new { error = new { header = "Not Found", body = "Publisher not found." } }, null, 404);
+                                return new Result<PublisherDTO>(false, "Publisher not found.", null, 404);
                             }
                         }
                     }
                     catch (Exception ex)
                     {
-                        return new Result<PublisherDTO>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, null, 500);
+                        return new Result<PublisherDTO>(false, "An unexpected error occurred on the server.", null, 500);
                     }
                 }
             }
@@ -76,11 +76,11 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                     await connection.OpenAsync();
                     await command.ExecuteNonQueryAsync();
                     publisherID = (int)returnValue.Value;
-                    return new Result<int>(true, new { success = new { header = "Success", body = "Publisher added successfully" } }, publisherID);
+                    return new Result<int>(true, "Publisher added successfully", publisherID);
                 }
                 catch (Exception ex)
                 {
-                    return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                    return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                 }
             }
         }
@@ -101,13 +101,13 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         rowsAffected = await command.ExecuteNonQueryAsync();
                         if (rowsAffected > 0)
                         {
-                            return new Result<bool>(true, new { success = new { header = "Success", body = "Publisher deleted successfully" } }, true);
+                            return new Result<bool>(true, "Publisher deleted successfully", true);
                         }
-                        return new Result<bool>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, false, 500);
+                        return new Result<bool>(false, "An unexpected error occurred on the server.", false, 500);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<bool>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, false, 500);
+                        return new Result<bool>(false, "An unexpected error occurred on the server.", false, 500);
                     }
                 }
             }
@@ -134,12 +134,12 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                                 reader.GetInt32(reader.GetOrdinal("TotalBooks"))
                             ));
                         }
-                        return new Result<List<PublisherViewDTO>>(true, new { success = new { header = "Success", body = "All publishers retrieved successfully." } }, allPublishers);
+                        return new Result<List<PublisherViewDTO>>(true, "All publishers retrieved successfully.", allPublishers);
                     }
                 }
                 catch (Exception ex)
                 {
-                    return new Result<List<PublisherViewDTO>>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, allPublishers, 500);
+                    return new Result<List<PublisherViewDTO>>(false, "An unexpected error occurred on the server.", allPublishers, 500);
                 }
             }
         }
@@ -160,13 +160,13 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         publisherName = (string)await command.ExecuteScalarAsync();
                         if (publisherName != string.Empty)
                         {
-                            return new Result<string>(true, new { success = new { header = "Success", body = "Publisher name retrieved successfully." } }, publisherName);
+                            return new Result<string>(true, "Publisher name retrieved successfully.", publisherName);
                         }
-                        return new Result<string>(false, new { error = new { header = "Not Found", body = "Publisher not found.." } }, null, 404);
+                        return new Result<string>(false, "Publisher not found..", null, 404);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<string>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, publisherName, 500);
+                        return new Result<string>(false, "An unexpected error occurred on the server.", publisherName, 500);
                     }
                 }
             }
@@ -186,11 +186,11 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                     {
                         await connection.OpenAsync();
                         publisherID = (int)await command.ExecuteScalarAsync();
-                        return new Result<int>(true, new { success = new { header = "Success", body = "Publisher ID retrieved successfully." } }, publisherID);
+                        return new Result<int>(true, "Publisher ID retrieved successfully.", publisherID);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                        return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                     }
                 }
             }
@@ -208,11 +208,11 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                     {
                         await connection.OpenAsync();
                         totalPublishers = (int)await command.ExecuteScalarAsync();
-                        return new Result<int>(true, new { success = new { header = "Success", body = "Total publishers count retrieved successfully." } }, totalPublishers);
+                        return new Result<int>(true, "Total publishers count retrieved successfully.", totalPublishers);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                        return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                     }
                 }
             }

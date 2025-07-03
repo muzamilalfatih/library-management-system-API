@@ -67,17 +67,17 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                                     publisherResult.Data,
                                     categoryResult.Data
                                 );
-                                return new Result<FullBookDTO>(true, new { success = new { header = "Success", body = "Book retrieved successfully." } }, book);
+                                return new Result<FullBookDTO>(true, "Book retrieved successfully.", book);
                             }
                             else
                             {
-                                return new Result<FullBookDTO>(false, new { error = new { header = "Not Found", body = "Book not found." } }, null, 404);
+                                return new Result<FullBookDTO>(false, "Book not found.", null, 404);
                             }
                         }
                     }
                     catch (Exception ex)
                     {
-                        return new Result<FullBookDTO>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, null, 500);
+                        return new Result<FullBookDTO>(false, "An unexpected error occurred on the server.", null, 500);
                     }
                 }
             }
@@ -141,14 +141,14 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                                     authorResult.Data,
                                     categoryResult.Data
                                     );
-                                return new Result<FullBookDTO>(true, new { success = new { header = "Success", body = "Books retrieved successfully" } }, book);
+                                return new Result<FullBookDTO>(true, "Books retrieved successfully", book);
                             }
-                            return new Result<FullBookDTO>(false, new { error = new { header = "Not Found", body = "No books found." } }, null, 404);
+                            return new Result<FullBookDTO>(false, "No books found.", null, 404);
                         }
                     }
                     catch (Exception ex)
                     {
-                        return new Result<FullBookDTO>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, null, 500);
+                        return new Result<FullBookDTO>(false, "An unexpected error occurred on the server.", null, 500);
                     }
                 }
             }
@@ -169,11 +169,11 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         {
                             isFound = reader.HasRows;
                         }
-                        return new Result<bool>(true, new { success = new { header = "Success", body = "Book existence check completed." } }, isFound);
+                        return new Result<bool>(true, "Book existence check completed.", isFound);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<bool>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, false, 500);
+                        return new Result<bool>(false, "An unexpected error occurred on the server.", false, 500);
                     }
                 }
             }
@@ -212,16 +212,16 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                     BookID = (int)returnedValue.Value;
                     if (BookID > 0)
                     {
-                        return new Result<int>(true, new { success = new { header = "Success", body = "Book added successfully." } }, BookID);
+                        return new Result<int>(true, "Book added successfully.", BookID);
                     }
                     else
                     {
-                        return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                        return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                     }
                 }
                 catch (Exception ex)
                 {
-                    return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                    return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                 }
             }
         }
@@ -254,16 +254,16 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         rowsAffected = await command.ExecuteNonQueryAsync();
                         if (rowsAffected > 0)
                         {
-                            return new Result<int>(true, new { success = new { header = "Success", body = "Book updated successfully." } }, rowsAffected);
+                            return new Result<int>(true, "Book updated successfully.", rowsAffected);
                         }
                         else
                         {
-                            return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                            return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                         }
                     }
                     catch (Exception ex)
                     {
-                        return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                        return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                     }
                 }
             }
@@ -284,16 +284,16 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         rowsAffected = await command.ExecuteNonQueryAsync();
                         if (rowsAffected > 0)
                         {
-                            return new Result<bool>(true, new { success = new { header = "Success", body = "Book deleted successfully." } }, true);
+                            return new Result<bool>(true, "Book deleted successfully.", true);
                         }
                         else
                         {
-                            return new Result<bool>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, false, 500);
+                            return new Result<bool>(false, "An unexpected error occurred on the server.", false, 500);
                         }
                     }
                     catch (Exception ex)
                     {
-                        return new Result<bool>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, false, 500);
+                        return new Result<bool>(false, "An unexpected error occurred on the server.", false, 500);
                     }
                 }
             }
@@ -313,11 +313,11 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         await connection.OpenAsync();
                         var result = await command.ExecuteScalarAsync();
                         isFound = result != null;
-                        return new Result<bool>(true, new { success = new { header = "Success", body = "Book existence checked." } }, isFound);
+                        return new Result<bool>(true, "Book existence checked.", isFound);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<bool>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, false, 500);
+                        return new Result<bool>(false, "An unexpected error occurred on the server.", false, 500);
                     }
                 }
             }
@@ -353,13 +353,13 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                     }
                     if (allBooks.Count == 0)
                     {
-                        return new Result<List<BookViewDTO>>(false, new { error = new { header = "Not Found", body = "No books found." } }, allBooks, 404);
+                        return new Result<List<BookViewDTO>>(false, "No books found.", allBooks, 404);
                     }
-                    return new Result<List<BookViewDTO>>(true, new { success = new { header = "Success", body = "Books retrieved successfully." } }, allBooks);
+                    return new Result<List<BookViewDTO>>(true, "Books retrieved successfully.", allBooks);
                 }
                 catch (Exception ex)
                 {
-                    return new Result<List<BookViewDTO>>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, allBooks, 500);
+                    return new Result<List<BookViewDTO>>(false, "An unexpected error occurred on the server.", allBooks, 500);
                 }
             }
         }
@@ -400,13 +400,13 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                     }
                     if (allBooks.Count == 0)
                     {
-                        return new Result<List<BookViewDTO>>(false, new { error = new { header = "Not Found", body = "No books found." } }, allBooks, 404);
+                        return new Result<List<BookViewDTO>>(false, "No books found.", allBooks, 404);
                     }
-                    return new Result<List<BookViewDTO>>(true, new { success = new { header = "Success", body = "Books retrieved successfully." } }, allBooks);
+                    return new Result<List<BookViewDTO>>(true, "Books retrieved successfully.", allBooks);
                 }
                 catch (Exception ex)
                 {
-                    return new Result<List<BookViewDTO>>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, allBooks, 500);
+                    return new Result<List<BookViewDTO>>(false, "An unexpected error occurred on the server.", allBooks, 500);
                 }
             }
         }
@@ -447,13 +447,13 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                     }
                     if (allBooks.Count == 0)
                     {
-                        return new Result<List<BookViewDTO>>(false, new { error = new { header = "Not Found", body = "No books found." } }, allBooks, 404);
+                        return new Result<List<BookViewDTO>>(false, "No books found.", allBooks, 404);
                     }
-                    return new Result<List<BookViewDTO>>(true, new { success = new { header = "Success", body = "Books retrieved successfully." } }, allBooks);
+                    return new Result<List<BookViewDTO>>(true, "Books retrieved successfully.", allBooks);
                 }
                 catch (Exception ex)
                 {
-                    return new Result<List<BookViewDTO>>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, allBooks, 500);
+                    return new Result<List<BookViewDTO>>(false, "An unexpected error occurred on the server.", allBooks, 500);
                 }
             }
         }

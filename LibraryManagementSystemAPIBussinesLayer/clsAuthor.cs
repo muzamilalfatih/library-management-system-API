@@ -41,13 +41,13 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             if (authorID <= 0)
             {
-                return new Result<clsAuthor>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, null, 400);
+                return new Result<clsAuthor>(false, "The request is invalid. Please check the input and try again.", null, 400);
             }
 
             Result<AuthorDTO> result = await clsAuthorData.GetAuthorInfoByIDAsync(authorID); 
             if (result.Success)
             {
-                return new Result<clsAuthor>(true, new { success = new { header = "Success", body = "Author Found." } }, new clsAuthor(result.Data, enMode.Update));
+                return new Result<clsAuthor>(true, "Author Found.", new clsAuthor(result.Data, enMode.Update));
             }
 
             return new Result<clsAuthor>(result.Success, result.Message, null, result.ErrorCode);
@@ -81,7 +81,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             if (AuthorID <= 0)
             {
-                return new Result<bool>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, false, 400);
+                return new Result<bool>(false, "The request is invalid. Please check the input and try again.", false, 400);
             }
             Result<AuthorDTO> result = await clsAuthorData.GetAuthorInfoByIDAsync(AuthorID);
             if (!result.Success)
@@ -115,13 +115,13 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             if (authorID <= 0)
             {
-                return new Result<List<BookViewDTO>>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, new List<BookViewDTO>(), 400);
+                return new Result<List<BookViewDTO>>(false, "The request is invalid. Please check the input and try again.", new List<BookViewDTO>(), 400);
             }
 
             Result<clsAuthor> result = await FindAsync(authorID); // Make it async
             if (!result.Success)
             {
-                return new Result<List<BookViewDTO>>(false, new { error = new { header = "Not Found", body = "Author not found." } }, new List<BookViewDTO>(), 404);
+                return new Result<List<BookViewDTO>>(false, "Author not found.", new List<BookViewDTO>(), 404);
             }
 
             return await clsBookData.GetAllBooksForAuthorIDAsync(authorID); // Make it async
@@ -144,7 +144,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
                     return await _UpdateAuthorAsync(); 
 
                 default:
-                    return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                    return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
             }
         }
 

@@ -41,13 +41,13 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             if (BookCopyID <= 0)
             {
-                return new Result<clsBookCopy>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, null, 400);
+                return new Result<clsBookCopy>(false, "The request is invalid. Please check the input and try again.", null, 400);
             }
             Result<BookCopyDTO> result = await clsBookCopyData.GetBookCopyInfoByIDAsync(BookCopyID);
 
             if (result.Success)
             {
-                return new Result<clsBookCopy>(true, new { success = new { header = "Success", body = "Book copy retrieved successfully." } }, new clsBookCopy(result.Data));
+                return new Result<clsBookCopy>(true, "Book copy retrieved successfully.", new clsBookCopy(result.Data));
             }
             return new Result<clsBookCopy>(result.Success, result.Message, null, result.ErrorCode);
         }
@@ -70,7 +70,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
             }
             if (!result.Data.IsDamaged)
             {
-                return new Result<int>(false, new { error = new { header = "Bad Request", body = "This copy is not damaged." } }, -1, 400);
+                return new Result<int>(false, "This copy is not damaged.", -1, 400);
             }
             return await clsBookCopyData.RepairBookCopyAsync(repairCopyDTO);
         }

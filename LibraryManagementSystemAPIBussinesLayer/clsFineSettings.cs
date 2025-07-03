@@ -20,7 +20,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             if (fineSettingsDTO.FineAmountPerDay < 0 || fineSettingsDTO.FineForDamagedBook < 0)
             {
-                return new Result<bool>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, false, 400);
+                return new Result<bool>(false, "The request is invalid. Please check the input and try again.", false, 400);
             }
             return await clsFineSettingData.UpdateFineSettingsAsync(fineSettingsDTO);
         }

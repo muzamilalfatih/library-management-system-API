@@ -83,7 +83,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             if (BookID <= 0)
             {
-                return new Result<clsBook>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, null, 400);
+                return new Result<clsBook>(false, "The request is invalid. Please check the input and try again.", null, 400);
             }
 
             Result<FullBookDTO> result = await clsBookData.GetBookInfoByIDAsync(BookID);
@@ -100,7 +100,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
 
             if (result.Success)
             {
-                return new Result<clsBook>(true, new { success = new { header = "Success", body = "Book found successfully." } }, new clsBook(result.Data, enMode.Update));
+                return new Result<clsBook>(true, "Book found successfully.", new clsBook(result.Data, enMode.Update));
             }
             return new Result<clsBook>(false, result.Message, null, result.ErrorCode);
         }
@@ -130,7 +130,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
                 case enMode.Update:
                     return await _UpdateBookAsync();
                 default:
-                    return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                    return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
             }
         }
 
@@ -142,7 +142,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
                 return new Result<bool>(false, result.Message, false, result.ErrorCode);
             }
             bool available = result.Data > 0;
-            return new Result<bool>(true, new { success = new { header = "Success", body = "Book availability complete." } }, available);
+            return new Result<bool>(true, "Book availability complete.", available);
         }
 
         static public async Task<Result<int>> GetCopiesAvilableAsync(int BookID)
@@ -161,7 +161,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
                 }
                 if (!reservationAvailabeResult.Data)
                 {
-                    return new Result<bool>(false, new { error = new { header = "Not Available", body = "The book is not available yet!" } }, false, 422);
+                    return new Result<bool>(false, "The book is not available yet!", false, 422);
                 }
             }
 
@@ -172,9 +172,9 @@ namespace LibraryManagementSystemAPIBussinesLayer
             }
             if (!isAvailabeResult.Data)
             {
-                return new Result<bool>(false, new { error = new { header = "Checked Out", body = "This book is checked out!" } }, false, 422);
+                return new Result<bool>(false, "This book is checked out!", false, 422);
             }
-            return new Result<bool>(true, new { success = new { header = "Success", body = "All book criteria met" } }, true);
+            return new Result<bool>(true, "All book criteria met", true);
         }
         public static async Task<Result<bool>> ValidateDataAsync( AddNewBookDTO addNewBookDTO)
         {
@@ -189,7 +189,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
                 || addNewBookDTO.numberOfCopies <= 0 
                 )
             {
-                return new Result<bool>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, false, 400);
+                return new Result<bool>(false, "The request is invalid. Please check the input and try again.", false, 400);
             }
             Result<bool> result = await clsBookData.IsBookExistByISBN(addNewBookDTO.bookDTO.ISBN);
             if (!result.Success)
@@ -198,9 +198,9 @@ namespace LibraryManagementSystemAPIBussinesLayer
             }
             if (result.Data)
             {
-                return new Result<bool>(false, new { error = new { header = "Bad Request", body = "This ISBN is already exist in the system." } }, false, 400);
+                return new Result<bool>(false, "This ISBN is already exist in the system.", false, 400);
             }
-            return new Result<bool>(true, new { success = new { header = "Success", body = "The data is valid." } }, true);
+            return new Result<bool>(true, "The data is valid.", true);
         }
         public static async Task<Result<bool>> ValidateDataAsync(BookDTO bookDTO, string currentISBN)
         {
@@ -214,7 +214,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
                 bookDTO.BorrowFees < 0
                 )
             {
-                return new Result<bool>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, false, 400);
+                return new Result<bool>(false, "The request is invalid. Please check the input and try again.", false, 400);
             }
             if (bookDTO.ISBN != currentISBN)
             {
@@ -225,10 +225,10 @@ namespace LibraryManagementSystemAPIBussinesLayer
                 }
                 if (result.Data)
                 {
-                    return new Result<bool>(false, new { error = new { header = "Bad Request", body = "This ISBN is already exist in the system." } }, false, 400);
+                    return new Result<bool>(false, "This ISBN is already exist in the system.", false, 400);
                 }
             }
-            return new Result<bool>(true, new { success = new { header = "Success", body = "The data is valid." } }, true);
+            return new Result<bool>(true, "The data is valid.", true);
         }
         public static async Task<Result<List<BookViewDTO>>> GetAllBooksAsync()
         {
@@ -251,7 +251,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             if (id <= 0)
             {
-                return new Result<bool>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, false, 400);
+                return new Result<bool>(false, "The request is invalid. Please check the input and try again.", false, 400);
             }
             Result<FullBookDTO> result = await clsBookData.GetBookInfoByIDAsync(id);
             if (!result.Success)

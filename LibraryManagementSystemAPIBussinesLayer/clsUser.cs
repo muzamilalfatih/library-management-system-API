@@ -88,7 +88,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             if (UserID <= 0)
             {
-                return new Result<clsUser>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, null, 400);
+                return new Result<clsUser>(false, "The request is invalid. Please check the input and try again.", null, 400);
             }
             Result<UserDTO> result = await clsUserData.GetUserInfoByUserIDAsync(UserID);
             if (result.Success)
@@ -102,7 +102,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             if (string.IsNullOrWhiteSpace(UserName))
             {
-                return new Result<clsUser>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, null, 400);
+                return new Result<clsUser>(false, "The request is invalid. Please check the input and try again.", null, 400);
             }
             Result<UserDTO> result = await clsUserData.GetUserInfoByUserNameAsync(UserName);
             if (result.Success)
@@ -137,7 +137,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             if (UserID <= 0)
             {
-                return new Result<bool>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, false, 400);
+                return new Result<bool>(false, "The request is invalid. Please check the input and try again.", false, 400);
             }
             Result<UserDTO> result = await clsUserData.GetUserInfoByUserIDAsync(UserID);
             if (!result.Success)
@@ -166,7 +166,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             if (CurrentUserID <= 0)
             {
-                return new Result<bool>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, false, 400);
+                return new Result<bool>(false, "The request is invalid. Please check the input and try again.", false, 400);
             }
             return await clsUserData.IsThereOtherAdminsAsync(CurrentUserID);
         }
@@ -176,13 +176,13 @@ namespace LibraryManagementSystemAPIBussinesLayer
             Result<clsUser> result = await FindAsync(loginDTO.UserName);
             if (!result.Success)
             {
-                return new Result<ResponseUserDataDTO>(false, new { error = new { header = "Unauthorized", body = "Invalid username or password." } }, null, 401);
+                return new Result<ResponseUserDataDTO>(false, "Invalid username or password.", null, 401);
             }
             if (result.Data.Password != Utility.ComputeHash(loginDTO.Password))
             {
-                return new Result<ResponseUserDataDTO>(false, new { error = new { header = "Unauthorized", body = "Invalid username or password." } }, null, 401);
+                return new Result<ResponseUserDataDTO>(false, "Invalid username or password.", null, 401);
             }
-            return new Result<ResponseUserDataDTO>(true, new { success = new { header = "Success", body = "User logged in successfully." } }, result.Data.ReponseDataDTO);
+            return new Result<ResponseUserDataDTO>(true, "User logged in successfully.", result.Data.ReponseDataDTO);
         }
 
         public bool SendEmail(string Body, string Subject)
@@ -204,15 +204,15 @@ namespace LibraryManagementSystemAPIBussinesLayer
             }
             if (userExestenseResult.Data)
             {
-                return new Result<bool>(false, new { error = new { header = "Bad Request", body = "This username is used by another person." } }, false, 400);
+                return new Result<bool>(false, "This username is used by another person.", false, 400);
             }
-            return new Result<bool>(true, new { success = new { header = "Success", body = "Validation complete." } }, true);
+            return new Result<bool>(true, "Validation complete.", true);
         }
         public static async Task<Result<bool>> ValidateDataAsync(UserDTO userDTO, string currentUserName, string currentNationalNumber)
         {
             if (userDTO.UserName == "" || userDTO.Password == "")
             {
-                return new Result<bool>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, false, 400);
+                return new Result<bool>(false, "The request is invalid. Please check the input and try again.", false, 400);
             }
             Result<bool> personInfoValidationResult = await clsPerson.ValidateDataAsync(userDTO.PersonInfoDTO, currentNationalNumber);
             if (!personInfoValidationResult.Success)
@@ -228,7 +228,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
                 }
                 if (userExestenseResult.Data)
                 {
-                    return new Result<bool>(false, new { error = new { header = "Bad Request", body = "This username is used by another person." } }, false, 400);
+                    return new Result<bool>(false, "This username is used by another person.", false, 400);
                 }
             }
             if ((enUserRole)userDTO.Role != enUserRole.Admin || !userDTO.IsActive)
@@ -240,10 +240,10 @@ namespace LibraryManagementSystemAPIBussinesLayer
                 }
                 if (checkOtherAdminsResult.Data)
                 {
-                    return new Result<bool>(false, new { error = new { header = "Bad Request", body = "At least must be one active admin in the system." } }, false, 400);
+                    return new Result<bool>(false, "At least must be one active admin in the system.", false, 400);
                 }
             }
-            return new Result<bool>(true, new { success = new { header = "Success", body = "Validation complete." } }, true);
+            return new Result<bool>(true, "Validation complete.", true);
         }
         public async Task<Result<int>> SaveAsync()
         {
@@ -260,7 +260,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
                 case enMode.Update:
                     return await _UpdateUserAsync();
                 default:
-                    return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                    return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
             }
         }
         public static async Task<Result<UserDTO>> UpdateUserAsync(int id,  UserDTO userDTO)

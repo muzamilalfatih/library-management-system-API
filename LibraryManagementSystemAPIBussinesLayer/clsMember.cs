@@ -82,7 +82,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
             }
             clsMember member = new clsMember(addNewMember);
             member.CreatedByUserInfo = result.Data;
-            return new Result<clsMember>(true, new { success = new { header = "Success", body = "Member created successfully." } }, member);
+            return new Result<clsMember>(true, "Member created successfully.", member);
         }
         public FullMemberDTO MDTO
         {
@@ -104,12 +104,12 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             if (MemberID <= 0)
             {
-                return new Result<clsMember>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, null, 400);
+                return new Result<clsMember>(false, "The request is invalid. Please check the input and try again.", null, 400);
             }
             Result<FullMemberDTO> result = await clsMemberData.GetMemberInfoByIDAsync(MemberID);
             if (result.Success)
             {
-                return new Result<clsMember>(true, new { success = new { header = "Success", body = " Member found." } }, new clsMember(result.Data, enMode.Update));
+                return new Result<clsMember>(true, " Member found.", new clsMember(result.Data, enMode.Update));
             }
             return new Result<clsMember>(result.Success, result.Message, null, result.ErrorCode);
         }
@@ -147,7 +147,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             if (MemberID <= 0)
             {
-                return new Result<bool>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, false, 400);
+                return new Result<bool>(false, "The request is invalid. Please check the input and try again.", false, 400);
             }
             Result<FullMemberDTO> result = await clsMemberData.GetMemberInfoByIDAsync(MemberID);
             if (!result.Success)
@@ -201,7 +201,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             if (!this.IsActive)
             {
-                return new Result<bool>(false, new { error = new { header = "Inactive Member", body = "This member's account is inactive. Please contact the administrator for assistance." } }, false, 422);
+                return new Result<bool>(false, "This member's account is inactive. Please contact the administrator for assistance.", false, 422);
             }
             Result<bool> result = await this.HasUnpaidFineAsync();
             if (!result.Success)
@@ -210,7 +210,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
             }
             if (result.Data)
             {
-                return new Result<bool>(false, new { error = new { header = "Membership Deactivated", body = "Your membership has been deactivated due to outstanding fines. Please settle your balance to reactivate your account. Contact the library staff for further assistance." } }, false, 422);
+                return new Result<bool>(false, "Your membership has been deactivated due to outstanding fines. Please settle your balance to reactivate your account. Contact the library staff for further assistance.", false, 422);
             }
             result =  this.HasActiveMembership();
             if (!result.Success)
@@ -219,7 +219,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
             }
             if (!result.Data)
             {
-                return new Result<bool>(false, new { error = new { header = "Inactive Membership", body = "This membership is currently inactive. Please renew the membership to regain access and try again." } }, false, 422);
+                return new Result<bool>(false, "This membership is currently inactive. Please renew the membership to regain access and try again.", false, 422);
             }
             Result<int> result1 = await GetNumberOFBorrowedBooksAsync();
             if (!result1.Success)
@@ -228,7 +228,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
             }
             if (result1.Data >= this.MembershipInfo.MembershipClassInfo.MaxNumberOfBookCanBorrow)
             {
-                return new Result<bool>(false, new { error = new { header = "Borrowing Limit Reached", body = "You've reached your borrowing limit. Return items or upgrade your membership for more." } }, false, 422);
+                return new Result<bool>(false, "You've reached your borrowing limit. Return items or upgrade your membership for more.", false, 422);
             }
             return new Result<bool>(true, "All criteria have been met. You are eligible to borrow books.", true);
         }
@@ -244,11 +244,11 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             if (!_ValidateDataAsync(ref renewMembershipDTO))
             {
-                return new Result<FullMembershipDTO>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, null, 400);
+                return new Result<FullMembershipDTO>(false, "The request is invalid. Please check the input and try again.", null, 400);
             }
             if (this.MembershipInfo.MembershipExpirationDate >= DateTime.Now)
             {
-                return new Result<FullMembershipDTO>(false, new { error = new { header = "Active Membership", body = $"This member has an active membership with class {MembershipInfo.MembershipClassInfo.Name}" } }, null, 422);
+                return new Result<FullMembershipDTO>(false, $"This member has an active membership with class {MembershipInfo.MembershipClassInfo.Name}", null, 422);
             }
             MembershipDTO addNewMembershipDTO = new MembershipDTO(this.MemberID, renewMembershipDTO.MembershipClassID, renewMembershipDTO.MembershipStartDate,
                  renewMembershipDTO.MembershipExpirationDate, renewMembershipDTO.PaidFees, renewMembershipDTO.CreatedByUserID);
@@ -263,7 +263,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
                 return new Result<FullMembershipDTO>(false, result.Message, null, result.ErrorCode);
             }
             this.MembershipInfo = createMembershipResult.Data;
-            return new Result<FullMembershipDTO>(true, new { success = new { header = "Success", body = "Membership renewed successfully." } }, this.MembershipInfo.FMSDTO);
+            return new Result<FullMembershipDTO>(true, "Membership renewed successfully.", this.MembershipInfo.FMSDTO);
         }
 
         public static async Task<Result<bool>> ValidateDataAsync(ReceivedDataAddNewMemberDTO addNewMemberDTO)
@@ -273,7 +273,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
                 addNewMemberDTO.CreatedDate < DateTime.Now
                 )
             {
-                return new Result<bool>(false, new { error = new { header = "Bad Request", body = "The request is invalid. Please check the input and try again." } }, false, 400);
+                return new Result<bool>(false, "The request is invalid. Please check the input and try again.", false, 400);
             }
             return await clsPerson.ValidateDataAsync(addNewMemberDTO.PersonInfoDTO);
         }
@@ -296,7 +296,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
                 case enMode.Update:
                     return await _UpdateMemberAsync();
                 default:
-                    return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                    return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
             }
         }
 

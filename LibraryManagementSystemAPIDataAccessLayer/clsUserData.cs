@@ -41,17 +41,17 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                                     reader.GetBoolean(reader.GetOrdinal("IsActive")),
                                     result.Data
                                 );
-                                return new Result<UserDTO>(true, new { success = new { header = "Success", body = "User found successfully." } }, user);
+                                return new Result<UserDTO>(true, "User found successfully.", user);
                             }
                             else
                             {
-                                return new Result<UserDTO>(false, new { error = new { header = "Not Found", body = "User not found." } }, null, 404);
+                                return new Result<UserDTO>(false, "User not found.", null, 404);
                             }
                         }
                     }
                     catch (Exception ex)
                     {
-                        return new Result<UserDTO>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, null, 500);
+                        return new Result<UserDTO>(false, "An unexpected error occurred on the server.", null, 500);
                     }
                 }
             }
@@ -87,17 +87,17 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                                     reader.GetBoolean(reader.GetOrdinal("IsActive")),
                                     result.Data
                                 );
-                                return new Result<UserDTO>(true, new { success = new { header = "Success", body = "User found successfully." } }, user);
+                                return new Result<UserDTO>(true, "User found successfully.", user);
                             }
                             else
                             {
-                                return new Result<UserDTO>(false, new { error = new { header = "Not Found", body = "User not found." } }, null, 404);
+                                return new Result<UserDTO>(false, "User not found.", null, 404);
                             }
                         }
                     }
                     catch (Exception ex)
                     {
-                        return new Result<UserDTO>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, null, 500);
+                        return new Result<UserDTO>(false, "An unexpected error occurred on the server.", null, 500);
                     }
                 }
             }
@@ -128,16 +128,16 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                     userID = (int)returnedValue.Value;
                     if (userID > 0)
                     {
-                        return new Result<int>(true, new { success = new { header = "Success", body = "User added successfully." } }, userID);
+                        return new Result<int>(true, "User added successfully.", userID);
                     }
                     else
                     {
-                        return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                        return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                     }
                 }
                 catch (Exception ex)
                 {
-                    return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                    return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                 }
             }
         }
@@ -170,13 +170,13 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         rowsAffected = await command.ExecuteNonQueryAsync();
                         if (rowsAffected > 0)
                         {
-                            return new Result<int>(true, new { success = new { header = "Success", body = "User updated successfully." } }, rowsAffected);
+                            return new Result<int>(true, "User updated successfully.", rowsAffected);
                         }
-                        return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                        return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                        return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                     }
                 }
             }
@@ -197,13 +197,13 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         rowsAffected = await command.ExecuteNonQueryAsync();
                         if (rowsAffected > 0)
                         {
-                            return new Result<bool>(true, new { success = new { header = "Success", body = "User deleted successfully." } }, true);
+                            return new Result<bool>(true, "User deleted successfully.", true);
                         }
-                        return new Result<bool>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, false, 500);
+                        return new Result<bool>(false, "An unexpected error occurred on the server.", false, 500);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<bool>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, false, 500);
+                        return new Result<bool>(false, "An unexpected error occurred on the server.", false, 500);
                     }
                 }
             }
@@ -231,11 +231,11 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                             ));
                         }
                     }
-                    return new Result<List<UserViewDTO>>(true, new { success = new { header = "Success", body = "Users retrieved successfully." } }, allUsers);
+                    return new Result<List<UserViewDTO>>(true, "Users retrieved successfully.", allUsers);
                 }
                 catch (Exception ex)
                 {
-                    return new Result<List<UserViewDTO>>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, allUsers, 500);
+                    return new Result<List<UserViewDTO>>(false, "An unexpected error occurred on the server.", allUsers, 500);
                 }
             }
         }
@@ -256,11 +256,11 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         {
                             isFound = reader.HasRows;
                         }
-                        return new Result<bool>(true, new { success = new { header = "Success", body = "User existence check completed." } }, isFound);
+                        return new Result<bool>(true, "User existence check completed.", isFound);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<bool>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, false, 500);
+                        return new Result<bool>(false, "An unexpected error occurred on the server.", false, 500);
                     }
                 }
             }
@@ -282,11 +282,11 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         {
                             isFound = reader.HasRows;
                         }
-                        return new Result<bool>(true, new { success = new { header = "Success", body = "User existence check completed." } }, isFound);
+                        return new Result<bool>(true, "User existence check completed.", isFound);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<bool>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, false, 500);
+                        return new Result<bool>(false, "An unexpected error occurred on the server.", false, 500);
                     }
                 }
             }
@@ -308,11 +308,11 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                     {
                         TotalUsers = UsersCount;
                     }
-                    return new Result<int>(true, new { success = new { header = "Success", body = "Total users retrieved successfully." } }, TotalUsers);
+                    return new Result<int>(true, "Total users retrieved successfully.", TotalUsers);
                 }
                 catch (Exception ex)
                 {
-                    return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                    return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                 }
             }
         }
@@ -333,11 +333,11 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         {
                             isFound = reader.HasRows;
                         }
-                        return new Result<bool>(true, new { success = new { header = "Success", body = "Other admins check complete." } }, isFound);
+                        return new Result<bool>(true, "Other admins check complete.", isFound);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<bool>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, false, 500);
+                        return new Result<bool>(false, "An unexpected error occurred on the server.", false, 500);
                     }
                 }
             }
@@ -363,13 +363,13 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         rowsAffected = await command.ExecuteNonQueryAsync();
                         if (rowsAffected > 0)
                         {
-                            return new Result<bool>(true, new { success = new { header = "Success", body = "Password updated successfully." } }, true);
+                            return new Result<bool>(true, "Password updated successfully.", true);
                         }
-                        return new Result<bool>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, false, 500);
+                        return new Result<bool>(false, "An unexpected error occurred on the server.", false, 500);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<bool>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, false, 500);
+                        return new Result<bool>(false, "An unexpected error occurred on the server.", false, 500);
                     }
                 }
             }
@@ -391,11 +391,11 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         {
                             AuthorName = result.ToString();
                         }
-                        return new Result<string>(true, new { success = new { header = "Success", body = "UserName retrieved successfully." } }, AuthorName);
+                        return new Result<string>(true, "UserName retrieved successfully.", AuthorName);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<string>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, "", 500);
+                        return new Result<string>(false, "An unexpected error occurred on the server.", "", 500);
                     }
                 }
             }

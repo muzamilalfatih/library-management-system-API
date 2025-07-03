@@ -34,11 +34,11 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                             ));
                         }
                     }
-                    return new Result<List<FineSettingsDTO>>(true, new { success = new { header = "Success", body = "Fine settings retrieved successfully." } }, FineSettings);
+                    return new Result<List<FineSettingsDTO>>(true, "Fine settings retrieved successfully.", FineSettings);
                 }
                 catch (Exception ex)
                 {
-                    return new Result<List<FineSettingsDTO>>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, FineSettings, 500);
+                    return new Result<List<FineSettingsDTO>>(false, "An unexpected error occurred on the server.", FineSettings, 500);
                 }
             }
         }
@@ -63,13 +63,13 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         rowsAffected = await command.ExecuteNonQueryAsync();
                         if (rowsAffected == 0)
                         {
-                            return new Result<bool>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, false, 500);
+                            return new Result<bool>(false, "An unexpected error occurred on the server.", false, 500);
                         }
-                        return new Result<bool>(true, new { success = new { header = "Success", body = "Fine Settings updated successfully." } }, true);
+                        return new Result<bool>(true, "Fine Settings updated successfully.", true);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<bool>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, false, 500);
+                        return new Result<bool>(false, "An unexpected error occurred on the server.", false, 500);
                     }
                 }
             }

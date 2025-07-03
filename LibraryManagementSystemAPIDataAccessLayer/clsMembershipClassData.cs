@@ -33,17 +33,17 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                                     reader.GetInt32(reader.GetOrdinal("MaxNumberOfBooksCanBorrow")),
                                     (float)reader.GetDecimal(reader.GetOrdinal("FeesPerDay"))
                                 );
-                                return new Result<MembershipClassDTO>(true, new { success = new { header = "Success", body = "Membership class found successfully." } }, membershipClass);
+                                return new Result<MembershipClassDTO>(true, "Membership class found successfully.", membershipClass);
                             }
                             else
                             {
-                                return new Result<MembershipClassDTO>(false, new { error = new { header = "Not Found", body = "Membership class not found." } }, null, 404);
+                                return new Result<MembershipClassDTO>(false, "Membership class not found.", null, 404);
                             }
                         }
                     }
                     catch (Exception ex)
                     {
-                        return new Result<MembershipClassDTO>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, null, 500);
+                        return new Result<MembershipClassDTO>(false, "An unexpected error occurred on the server.", null, 500);
                     }
                 }
             }
@@ -66,11 +66,11 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         {
                             membershipClassName = result.ToString();
                         }
-                        return new Result<string>(true, new { success = new { header = "Success", body = "Membership class name retrieved successfully." } }, membershipClassName);
+                        return new Result<string>(true, "Membership class name retrieved successfully.", membershipClassName);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<string>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, membershipClassName, 500);
+                        return new Result<string>(false, "An unexpected error occurred on the server.", membershipClassName, 500);
                     }
                 }
             }
@@ -93,11 +93,11 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         {
                             membershipClassID = id;
                         }
-                        return new Result<int>(true, new { success = new { header = "Success", body = "Membership class ID retrieved successfully." } }, membershipClassID);
+                        return new Result<int>(true, "Membership class ID retrieved successfully.", membershipClassID);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, membershipClassID, 500);
+                        return new Result<int>(false, "An unexpected error occurred on the server.", membershipClassID, 500);
                     }
                 }
             }
@@ -125,12 +125,12 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                                     (float)reader.GetDecimal(reader.GetOrdinal("FeesPerDay"))
                                 ));
                             }
-                            return new Result<List<MembershipClassDTO>>(true, new { success = new { header = "Success", body = "All membership classes retrieved successfully." } }, membershipClasses);
+                            return new Result<List<MembershipClassDTO>>(true, "All membership classes retrieved successfully.", membershipClasses);
                         }
                     }
                     catch (Exception ex)
                     {
-                        return new Result<List<MembershipClassDTO>>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, membershipClasses, 500);
+                        return new Result<List<MembershipClassDTO>>(false, "An unexpected error occurred on the server.", membershipClasses, 500);
                     }
                 }
             }
@@ -159,11 +159,11 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         {
                             membershipClassID = id;
                         }
-                        return new Result<int>(true, new { success = new { header = "Success", body = "Membership class added successfully" } }, membershipClassID);
+                        return new Result<int>(true, "Membership class added successfully", membershipClassID);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, membershipClassID, 500);
+                        return new Result<int>(false, "An unexpected error occurred on the server.", membershipClassID, 500);
                     }
                 }
             }
@@ -193,13 +193,13 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         rowsAffected = await command.ExecuteNonQueryAsync();
                         if (rowsAffected > 0)
                         {
-                            return new Result<int>(true, new { success = new { header = "Success", body = "Membership class updated successfully." } }, rowsAffected);
+                            return new Result<int>(true, "Membership class updated successfully.", rowsAffected);
                         }
-                        return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                        return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                        return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                     }
                 }
             }
@@ -220,13 +220,13 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         rowsAffected = await command.ExecuteNonQueryAsync();
                         if (rowsAffected > 0)
                         {
-                            return new Result<bool>(true, new { success = new { header = "Success", body = "Membership class deleted successfully." } }, true);
+                            return new Result<bool>(true, "Membership class deleted successfully.", true);
                         }
-                        return new Result<bool>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, false, 500);
+                        return new Result<bool>(false, "An unexpected error occurred on the server.", false, 500);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<bool>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, false, 500);
+                        return new Result<bool>(false, "An unexpected error occurred on the server.", false, 500);
                     }
                 }
             }

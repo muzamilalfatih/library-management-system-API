@@ -39,17 +39,17 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                                     reader.GetBoolean(reader.GetOrdinal("IsAvailable")),
                                     reader.GetBoolean(reader.GetOrdinal("IsDamaged"))
                                 );
-                                return new Result<BookCopyDTO>(true, new { success = new { header = "Success", body = "Copy found successfully" } }, bookCopy);
+                                return new Result<BookCopyDTO>(true, "Copy found successfully", bookCopy);
                             }
                             else
                             {
-                                return new Result<BookCopyDTO>(false, new { error = new { header = "Not Found", body = "Copy not found." } }, null, 404);
+                                return new Result<BookCopyDTO>(false, "Copy not found.", null, 404);
                             }
                         }
                     }
                     catch (Exception ex)
                     {
-                        return new Result<BookCopyDTO>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, null, 500);
+                        return new Result<BookCopyDTO>(false, "An unexpected error occurred on the server.", null, 500);
                     }
                 }
             }
@@ -81,13 +81,13 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                     }
                     if (allCopies.Count == 0)
                     {
-                        return new Result<List<BookCopyDTO>>(false, new { error = new { header = "Not Found", body = "No books found." } }, allCopies, 404);
+                        return new Result<List<BookCopyDTO>>(false, "No books found.", allCopies, 404);
                     }
                     return new Result<List<BookCopyDTO>>(true, "Books retrieved successfully.", allCopies);
                 }
                 catch (Exception ex)
                 {
-                    return new Result<List<BookCopyDTO>>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, allCopies, 500);
+                    return new Result<List<BookCopyDTO>>(false, "An unexpected error occurred on the server.", allCopies, 500);
                 }
             }
         }
@@ -113,16 +113,16 @@ namespace LibraryManagementSystemAPIDataAccessLayer
 
                     if (result != null && int.TryParse(result.ToString(), out int newBookCopyID))
                     {
-                        return new Result<int>(true, new { success = new { header = "Success", body = "Copy added successfully." } }, newBookCopyID);
+                        return new Result<int>(true, "Copy added successfully.", newBookCopyID);
                     }
                     else
                     {
-                        return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                        return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                     }
                 }
                 catch (Exception ex)
                 {
-                    return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                    return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                 }
             }
         }
@@ -152,16 +152,16 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                     }
                     if ((int)outPutParameter.Value > 0)
                     {
-                        return new Result<List<int>>(true, new { success = new { header = "Success", body = "Copies inserted successfully." } }, reservationsList);
+                        return new Result<List<int>>(true, "Copies inserted successfully.", reservationsList);
                     }
                     else
                     {
-                        return new Result<List<int>>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, reservationsList, 500);
+                        return new Result<List<int>>(false, "An unexpected error occurred on the server.", reservationsList, 500);
                     }
                 }
                 catch (Exception ex)
                 {
-                    return new Result<List<int>>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, reservationsList, 500);
+                    return new Result<List<int>>(false, "An unexpected error occurred on the server.", reservationsList, 500);
                 }
             }
         }
@@ -184,11 +184,11 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         {
                             IsFound = reader.HasRows;
                         }
-                        return new Result<bool>(true, new { success = new { header = "Success", body = "Reservation check complete." } }, IsFound);
+                        return new Result<bool>(true, "Reservation check complete.", IsFound);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<bool>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, IsFound, 500);
+                        return new Result<bool>(false, "An unexpected error occurred on the server.", IsFound, 500);
                     }
                 }
             }
@@ -214,11 +214,11 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         {
                             totalCopies = Copies;
                         }
-                        return new Result<int>(true, new { success = new { header = "Success", body = "Total copies received successfully!" } }, totalCopies);
+                        return new Result<int>(true, "Total copies received successfully!", totalCopies);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                        return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                     }
                 }
             }
@@ -245,11 +245,11 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         {
                             availableCopies = Copies;
                         }
-                        return new Result<int>(true, new { success = new { header = "Success", body = "Available copies received successfully" } }, availableCopies);
+                        return new Result<int>(true, "Available copies received successfully", availableCopies);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                        return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                     }
                 }
             }
@@ -274,11 +274,11 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                         {
                             totalBooks = Copies;
                         }
-                        return new Result<int>(true, new { success = new { header = "Success", body = "Total received successfully" } }, totalBooks);
+                        return new Result<int>(true, "Total received successfully", totalBooks);
                     }
                     catch (Exception ex)
                     {
-                        return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                        return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                     }
                 }
             }
@@ -315,18 +315,18 @@ namespace LibraryManagementSystemAPIDataAccessLayer
 
                         if (rowsAffected > 0)
                         {
-                            return new Result<int>(true, new { success = new { header = "Success", body = "Copy repaired successfully." } },
+                            return new Result<int>(true, "Copy repaired successfully.",
                                 reservedForMemberID.Value == DBNull.Value ? -1 :
                                 Convert.ToInt32(reservedForMemberID.Value));
                         }
                         else
                         {
-                            return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                            return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                         }
                     }
                     catch (Exception ex)
                     {
-                        return new Result<int>(false, new { error = new { header = "Server Error", body = "An unexpected error occurred on the server." } }, -1, 500);
+                        return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);
                     }
                 }
             }
