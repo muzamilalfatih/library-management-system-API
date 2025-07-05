@@ -55,7 +55,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             get
             {
-                return new UserDTO(this.UserID, this.PersonID, this.UserName, this.Password, (int)this.UserRole, this.IsActive, PersonInfo.PDTO);
+                return new UserDTO(this.UserID, this.PersonID, this.UserName, this.Password, (int)this.UserRole, this.IsActive);
             }
         }
         public ResponseUserDataDTO ReponseDataDTO
@@ -69,7 +69,6 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             this.UserID = userDTO.UserID;
             this.PersonID = userDTO.PersonID;
-            this.PersonInfo = new clsPerson(userDTO.PersonInfoDTO, (clsPerson.enMode)mode);
             this.UserName = userDTO.UserName;
             if (mode == enMode.AddNew)
             {
@@ -192,17 +191,13 @@ namespace LibraryManagementSystemAPIBussinesLayer
 
         public static async Task<Result<bool>> ValidateDataAsync(UserDTO userDTO)
         {
-            Result<bool> personInfoValidationResult = await clsPerson.ValidateDataAsync(userDTO.PersonInfoDTO);
-            if (!personInfoValidationResult.Success)
+            
+            Result<bool> userExistenseResult = await clsUserData.IsUserExistAsync(userDTO.UserName);
+            if (!userExistenseResult.Success)
             {
-                return personInfoValidationResult;
+                return userExistenseResult;
             }
-            Result<bool> userExestenseResult = await clsUserData.IsUserExistAsync(userDTO.UserName);
-            if (!userExestenseResult.Success)
-            {
-                return userExestenseResult;
-            }
-            if (userExestenseResult.Data)
+            if (userExistenseResult.Data)
             {
                 return new Result<bool>(false, "This username is used by another person.", false, 400);
             }
@@ -214,11 +209,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
             {
                 return new Result<bool>(false, "The request is invalid. Please check the input and try again.", false, 400);
             }
-            Result<bool> personInfoValidationResult = await clsPerson.ValidateDataAsync(userDTO.PersonInfoDTO, currentNationalNumber);
-            if (!personInfoValidationResult.Success)
-            {
-                return personInfoValidationResult;
-            }
+            
             if (userDTO.UserName != currentUserName)
             {
                 Result<bool> userExestenseResult = await clsUserData.IsUserExistAsync(userDTO.UserName);
@@ -280,20 +271,9 @@ namespace LibraryManagementSystemAPIBussinesLayer
             findUserResult.Data.Password = Utility.ComputeHash(userDTO.Password);
             findUserResult.Data.UserRole = (enUserRole)userDTO.Role;
             findUserResult.Data.IsActive = userDTO.IsActive;
-            findUserResult.Data.PersonInfo.NationalNo = userDTO.PersonInfoDTO.NationalNo;
-            findUserResult.Data.PersonInfo.FirstName = userDTO.PersonInfoDTO.FirstName;
-            findUserResult.Data.PersonInfo.SecondName = userDTO.PersonInfoDTO.SecondName;
-            findUserResult.Data.PersonInfo.ThirdName = userDTO.PersonInfoDTO.ThirdName;
-            findUserResult.Data.PersonInfo.LastName = userDTO.PersonInfoDTO.LastName;
-            findUserResult.Data.PersonInfo.Gender = (clsPerson.enGender)userDTO.PersonInfoDTO.Gender;
-            findUserResult.Data.PersonInfo.Email = userDTO.PersonInfoDTO.Email;
-            findUserResult.Data.PersonInfo.Phone = userDTO.PersonInfoDTO.Phone;
 
             Result<int> saveResult = await findUserResult.Data.SaveAsync();
-            if (!saveResult.Success)
-            {
-                return new Result<UserDTO>(false, findUserResult.Message, null, findUserResult.ErrorCode);
-            }
+
             return new Result<UserDTO>(true, saveResult.Message, findUserResult.Data.UDTO);
         }
         public static async Task<Result<string>> GetUserNameAsync(int  userId)

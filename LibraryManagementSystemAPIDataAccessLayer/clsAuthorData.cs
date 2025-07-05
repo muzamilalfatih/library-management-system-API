@@ -32,13 +32,9 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                             {
                                 int authorID = reader.GetInt32(reader.GetOrdinal("AuthorID"));
                                 int personID = reader.GetInt32(reader.GetOrdinal("PersonID"));
-                                Result<PersonDTOs.PersonDTO> result = await clsPersonData.GetPersonInfoByIDAsync(personID);
-                                if (!result.Success)
-                                {
-                                    return new Result<AuthorDTO>(false, result.Message, null, result.ErrorCode);
-                                }
+
                                 DateTime createdDate = reader.GetDateTime(reader.GetOrdinal("CreatedDate"));
-                                AuthorDTO author = new AuthorDTO(authorID, personID, createdDate,result.Data );
+                                AuthorDTO author = new AuthorDTO(authorID, personID, createdDate );
                                 return new Result<AuthorDTO>(true, "Author retrieved successfully.", author);
                             }
                             else

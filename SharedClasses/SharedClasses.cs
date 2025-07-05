@@ -44,9 +44,8 @@ namespace SharedClasses
             public string Password { get; set; }
             public int Role { get; set; }
             public bool IsActive { get; set; }
-            public PersonDTOs.PersonDTO PersonInfoDTO { get; set; }
             [JsonConstructor]
-            public UserDTO(int userID, int personID, string userName, string password, int role, bool isActive, PersonDTOs.PersonDTO personInfoDTO)
+            public UserDTO(int userID, int personID, string userName, string password, int role, bool isActive)
             {
                 UserID = userID;
                 PersonID = personID;
@@ -54,7 +53,6 @@ namespace SharedClasses
                 Password = password;
                 Role = role;
                 IsActive = isActive;
-                PersonInfoDTO = personInfoDTO;
             }
         }
         public class UserViewDTO
@@ -122,14 +120,12 @@ namespace SharedClasses
             public int AuthorID { get; set; }
             public int PersonID { get; set; }
             public DateTime CreatedDate { get; set; }
-            public PersonDTOs.PersonDTO PersonInfoDTO { get; set; }
             [JsonConstructor]
-            public AuthorDTO(int AuthorID, int PersonID, DateTime CreatedDate, PersonDTOs.PersonDTO personInfoDTO)
+            public AuthorDTO(int AuthorID, int PersonID, DateTime CreatedDate)
             {
                 this.AuthorID = AuthorID;
                 this.PersonID = PersonID;
                 this.CreatedDate = CreatedDate;
-                PersonInfoDTO = personInfoDTO;
             }          
         }
         public class AuthorViewDTO
@@ -229,14 +225,12 @@ namespace SharedClasses
             public int PublisherID { get; set; }
             public int PersonID { get; set; }
             public DateTime CreatedDate { get; set; }
-            public PersonDTOs.PersonDTO PersonInfoDTO { get; set; }
             [JsonConstructor]
-            public PublisherDTO(int publisherID, int personID, DateTime createdDate, PersonDTOs.PersonDTO personInfoDTO)
+            public PublisherDTO(int publisherID, int personID, DateTime createdDate)
             {
                 PublisherID = publisherID;
                 PersonID = personID;
                 CreatedDate = createdDate;
-                PersonInfoDTO = personInfoDTO;
 
             }
            
@@ -452,20 +446,15 @@ namespace SharedClasses
             public DateTime CreatedDate { get; set; }
             public bool IsActive { get; set; }
             public int CreatedByUserID { get; set; }
-            public PersonDTOs.PersonDTO PersonInfoDTO { get; set; }
-            public UserDTOS.UserDTO CreatedByUserInfoDTO { get; set; }
             public MembershipDTOs.FullMembershipDTO MembershipInfoDTO { get; set; }
-            public FullMemberDTO(int memberID, int personID, DateTime createdDate, bool isActive, int createdByUserID,
-                PersonDTOs.PersonDTO personInfoDTO, UserDTOS.UserDTO userInfoDTO, MembershipDTOs.FullMembershipDTO membershipDTO)
+            public FullMemberDTO(int memberID, int personID, DateTime createdDate, bool isActive, int createdByUserID, MembershipDTOs.FullMembershipDTO membershipDTO)
             {
                 MemberID = memberID;
                 PersonID = personID;
                 CreatedDate = createdDate;
                 IsActive = isActive;
                 CreatedByUserID = createdByUserID;
-                PersonInfoDTO = personInfoDTO;
                 MembershipInfoDTO = membershipDTO;
-                CreatedByUserInfoDTO = userInfoDTO;
             }
 
         }
@@ -703,7 +692,6 @@ namespace SharedClasses
                 ReturnFees = returnFees;
                 ReservedForMemberID = reservedForMemberID;
             }
-
             public float ReturnFees { get; set; }
             public int ReservedForMemberID { get; set; }
         }
@@ -732,7 +720,6 @@ namespace SharedClasses
                 BorrowID = borrowID;
                 CopyID = copyID;
             }
-
             public int BorrowID { get; set; }
             public int CopyID { get; set; }
 

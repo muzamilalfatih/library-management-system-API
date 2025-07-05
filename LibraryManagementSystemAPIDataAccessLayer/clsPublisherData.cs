@@ -30,16 +30,10 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                             if (reader.Read())
                             {
                                 int personID = reader.GetInt32(reader.GetOrdinal("PersonID"));
-                                Result<PersonDTO> result = await clsPersonData.GetPersonInfoByIDAsync(personID);
-                                if (!result.Success)
-                                {
-                                    return new Result<PublisherDTO>(false, result.Message, null, result.ErrorCode);
-                                }
                                 var publisher = new PublisherDTO(
                                     reader.GetInt32(reader.GetOrdinal("PublisherID")),
                                     personID,
-                                    reader.GetDateTime(reader.GetOrdinal("CreatedDate")),
-                                    result.Data
+                                    reader.GetDateTime(reader.GetOrdinal("CreatedDate"))
                                 );
                                 return new Result<PublisherDTO>(true, "Publisher found successfully.", publisher);
                             }

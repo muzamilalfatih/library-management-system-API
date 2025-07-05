@@ -19,13 +19,11 @@ namespace LibraryManagementSystemAPIBussinesLayer
 
         public int ID { get; set; }
         public int PersonID { get; set; }
-        public clsPerson PersonInfo { get; set; }
         public DateTime CreatedDate { get; set; }
         public clsPublisher(PublisherDTO publisherDTO, enMode mode = enMode.AddNew)
         {
             this.ID = publisherDTO.PublisherID;
             this.PersonID = publisherDTO.PersonID;
-            this.PersonInfo = new clsPerson(publisherDTO.PersonInfoDTO, (clsPerson.enMode)mode);
             this.CreatedDate = publisherDTO.CreatedDate;
             _Mode = mode;
         }
@@ -34,7 +32,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             get
             {
-                return new PublisherDTO(this.ID, this.PersonID, this.CreatedDate, this.PersonInfo.PDTO);
+                return new PublisherDTO(this.ID, this.PersonID, this.CreatedDate);
             }
         }
         public static async Task<Result<clsPublisher>> FindAsync(int PublisherID)
@@ -60,20 +58,13 @@ namespace LibraryManagementSystemAPIBussinesLayer
         }
         private async Task<Result<int>> _AddNewPublisherAsync()
         {
-            Result<int> result = await PersonInfo.SaveAsync();
 
-            if (!result.Success)
-            {
-                return result;
-            }
-
-            this.PersonID = result.Data;
             return await clsPublisherData.AddNewPublisherAsync(this.PersonID);
         }
-        private async Task<Result<int>> _UpdatePublisherAsync(string originalNationalNumber)
-        {
-            return await PersonInfo.SaveAsync();
-        }
+        //private async Task<Result<int>> _UpdatePublisherAsync(string originalNationalNumber)
+        //{
+        //    
+        //}
         public static async Task<Result<bool>> DeletePublisherAsync(int PublisherID)
         {
             if (PublisherID <= 0)
@@ -128,7 +119,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
                     return addResult;
 
                 case enMode.Update:
-                    return await _UpdatePublisherAsync(originalNationalNumber);
+                    // return await _UpdatePublisherAsync(originalNationalNumber);
 
                 default:
                     return new Result<int>(
