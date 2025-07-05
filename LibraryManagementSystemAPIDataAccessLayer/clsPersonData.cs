@@ -39,7 +39,7 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                                     reader.GetString(reader.GetOrdinal("SecondName")),
                                     reader.IsDBNull(reader.GetOrdinal("ThirdName")) ? null : reader.GetString(reader.GetOrdinal("ThirdName")),
                                     reader.GetString(reader.GetOrdinal("LastName")),
-                                    reader.GetInt32(reader.GetOrdinal("Gender")),
+                                    (enGender)reader.GetInt32(reader.GetOrdinal("Gender")),
                                     reader.GetString(reader.GetOrdinal("Email")),
                                     reader.GetString(reader.GetOrdinal("Phone")),
                                     reader.GetString(reader.GetOrdinal("Address"))
@@ -72,7 +72,7 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                 command.Parameters.AddWithValue("@SecondName", personDTO.SecondName);
                 command.Parameters.Add(new SqlParameter("@ThirdName", personDTO.ThirdName ?? (object)DBNull.Value));
                 command.Parameters.AddWithValue("@LastName", personDTO.LastName);
-                command.Parameters.AddWithValue("@Gender", personDTO.Gender);
+                command.Parameters.AddWithValue("@Gender", (byte)personDTO.Gender);
                 command.Parameters.AddWithValue("@Email", personDTO.Email);
                 command.Parameters.AddWithValue("@Phone", personDTO.Phone);
                 command.Parameters.AddWithValue("@Address", personDTO.Address);
@@ -126,7 +126,7 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                     command.Parameters.AddWithValue("@SecondName", personDTO.SecondName);
                     command.Parameters.Add(new SqlParameter("@ThirdName", personDTO.ThirdName ?? (object)DBNull.Value));
                     command.Parameters.AddWithValue("@LastName", personDTO.LastName);
-                    command.Parameters.AddWithValue("@Gender", personDTO.Gender);
+                    command.Parameters.AddWithValue("@Gender",(byte) personDTO.Gender);
                     command.Parameters.AddWithValue("@Email", personDTO.Email);
                     command.Parameters.AddWithValue("@Phone", personDTO.Phone);
                     command.Parameters.AddWithValue("@Address", personDTO.Address);

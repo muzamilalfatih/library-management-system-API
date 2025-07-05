@@ -20,14 +20,13 @@ namespace LibraryManagementSystemAPIBussinesLayer
     public class MemberResponseDataDTO
     {
         public MemberResponseDataDTO(int memberID, bool isActive, DateTime createdDate, string createdByUserName,
-            string membershipClass, PersonDTOs.PersonDTO personInfoDTO)
+            string membershipClass)
         {
             MemberID = memberID;
             IsActive = isActive;
             CreatedDate = createdDate;
             CreatedByUserName = createdByUserName;
             MembershipClass = membershipClass;
-            PersonInfoDTO = personInfoDTO;
         }
 
         public int MemberID { get; set; }
@@ -35,7 +34,6 @@ namespace LibraryManagementSystemAPIBussinesLayer
         public DateTime CreatedDate { get; set; }
         public string CreatedByUserName { get; set; }
         public string MembershipClass { get; set; }
-        public PersonDTOs.PersonDTO PersonInfoDTO { get; set; }
     }
     public class clsMember
     {
@@ -48,7 +46,6 @@ namespace LibraryManagementSystemAPIBussinesLayer
         public DateTime CreatedDate { get; set; }
         public int CreatedByUserID { get; set; }
         public clsUser CreatedByUserInfo { get; set; }
-        public clsPerson PersonInfo { get; set; }
         public clsMembership MembershipInfo { get; set; }
 
         public clsMember(FullMemberDTO memberDTO, enMode mode = enMode.AddNew)
@@ -64,7 +61,6 @@ namespace LibraryManagementSystemAPIBussinesLayer
         public clsMember(ReceivedDataAddNewMemberDTO memberDTO, enMode mode = enMode.AddNew)
         {
             this.IsActive = memberDTO.IsActive;
-            this.PersonInfo = new clsPerson(memberDTO.PersonInfoDTO);
             this.CreatedByUserID = memberDTO.CreatedByUserID;
             this.CreatedByUserInfo = null;
             this.CreatedDate = memberDTO.CreatedDate;
@@ -94,7 +90,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
             get
             {
                 return new MemberResponseDataDTO(this.MemberID, this.IsActive, this.CreatedDate, this.CreatedByUserInfo.UserName,
-                    this.MembershipInfo.MembershipClassInfo.Name, this.PersonInfo.PDTO);
+                    this.MembershipInfo.MembershipClassInfo.Name);
             }
         }
         public static async Task<Result<clsMember>> FindAsync(int MemberID)
@@ -113,13 +109,8 @@ namespace LibraryManagementSystemAPIBussinesLayer
 
         private async Task<Result<int>> _AddNewMemberAsync()
         {
-            Result<int> result = await PersonInfo.SaveAsync();
-            if (!result.Success)
-            {
-                return result;
-            }
-            this.PersonID = result.Data;
-            result = await clsMemberData.AddNewMemberAsync(new clsMemberData.AddNewMemberDTO(this.PersonID, this.CreatedByUserID, this.IsActive));
+           
+            Result<int> result = await clsMemberData.AddNewMemberAsync(new clsMemberData.AddNewMemberDTO(this.PersonID, this.CreatedByUserID, this.IsActive));
             if (result.Success)
             {
                 this.MemberID = result.Data;
@@ -131,11 +122,6 @@ namespace LibraryManagementSystemAPIBussinesLayer
 
         private async Task<Result<int>> _UpdateMemberAsync()
         {
-            Result<int> result = await PersonInfo.SaveAsync();
-            if (!result.Success)
-            {
-                return result;
-            }
 
             return await clsMemberData.UpdateMemberAsync(new clsMemberData.UpdateMemberDTO(this.MemberID, this.IsActive));
         }
@@ -272,11 +258,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
             {
                 return new Result<bool>(false, "The request is invalid. Please check the input and try again.", false, 400);
             }
-            return await clsPerson.ValidateDataAsync(addNewMemberDTO.PersonInfoDTO);
-        }
-        public static async Task<Result<bool>> ValidateDataAsync(RecivedDataUpdateMemberDTO updateMemberDTO, string currentNationalNumber)
-        {
-            return await clsPerson.ValidateDataAsync(updateMemberDTO.PersonInfoDTO, updateMemberDTO.PersonInfoDTO.NationalNo);
+            return new Result<bool>(true, "The data is valid!", true);
         }
         public async Task<Result<int>> SaveAsync()
         {
