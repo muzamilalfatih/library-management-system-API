@@ -93,12 +93,12 @@ namespace SharedClasses
             public string SecondName { get; set; }
             public string? ThirdName { get; set; }
             public string LastName { get; set; }
-            public int Gender { get; set; }
+            public enGender Gender { get; set; }
             public string Address { get; set; }
             public string Phone { get; set; }
             public string Email { get; set; }
             public PersonDTO(int personID, string nationalNo, string firstName, string secondName,
-                                string? thirdName, string lastName, int gender, string address, string phone, string email)
+                                string? thirdName, string lastName, enGender gender, string address, string phone, string email)
             {
                 this.PersonID = personID;
                 this.NationalNo = nationalNo;
@@ -461,27 +461,23 @@ namespace SharedClasses
 
         public class RecivedDataUpdateMemberDTO
         {
-            public RecivedDataUpdateMemberDTO( bool isActive, PersonDTOs.PersonDTO personInfoDTO )
+            public RecivedDataUpdateMemberDTO( bool isActive )
             {
                 IsActive = isActive;
-                PersonInfoDTO = personInfoDTO;
             }
             public bool IsActive { get; set; }
-            public PersonDTOs.PersonDTO PersonInfoDTO { get; set; }
         }
         public class ReceivedDataAddNewMemberDTO
         {
-            public ReceivedDataAddNewMemberDTO(bool isActive, PersonDTOs.PersonDTO personInfoDTO, int createdByUserID, DateTime createdDate, MembershipDTOs.FullMembershipDTO membershipDTO)
+            public ReceivedDataAddNewMemberDTO(bool isActive, int createdByUserID, DateTime createdDate, MembershipDTOs.FullMembershipDTO membershipDTO)
             {
                 IsActive = isActive;
-                PersonInfoDTO = personInfoDTO;
                 CreatedByUserID = createdByUserID;
                 CreatedDate = createdDate;
                 MembershipInofDTO = membershipDTO;
             }
 
             public bool IsActive { get; set; }
-            public PersonDTOs.PersonDTO PersonInfoDTO { get; set; }
             public int CreatedByUserID { get; set; }
             public DateTime CreatedDate { get; set; }
             public MembershipDTOs.FullMembershipDTO MembershipInofDTO { get; set; }

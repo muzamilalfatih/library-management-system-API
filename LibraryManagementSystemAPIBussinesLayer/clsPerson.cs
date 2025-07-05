@@ -16,7 +16,6 @@ namespace LibraryManagementSystemAPIBussinesLayer
     public class clsPerson
     {
         public enum enMode { AddNew = 0, Update = 1 }
-        public enum enGender { Male = 0, Female = 1 }
         private enMode _Mode;
 
         public int PersonID { get; set; }
@@ -33,10 +32,6 @@ namespace LibraryManagementSystemAPIBussinesLayer
             }
         }
         public enGender Gender { get; set; }
-        public string GenderText()
-        {
-            return this.Gender == enGender.Male ? "Male" : "Female";
-        }
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Address { get; set; }
@@ -46,7 +41,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
             get
             {
                 return new PersonDTO(this.PersonID, this.NationalNo, this.FirstName, this.SecondName, this.ThirdName, this.LastName,
-                    (int)this.Gender, this.Email, this.Phone, this.Address);
+                    this.Gender, this.Email, this.Phone, this.Address);
             }
         }
 
@@ -58,7 +53,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
             this.SecondName = personDTO.SecondName;
             this.ThirdName = personDTO.ThirdName;
             this.LastName = personDTO.LastName;
-            this.Gender = (enGender)personDTO.Gender;
+            this.Gender = personDTO.Gender;
             this.Email = personDTO.Email;
             this.Phone = personDTO.Phone;
             this.Address = personDTO.Address;

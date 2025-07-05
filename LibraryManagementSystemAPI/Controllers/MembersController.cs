@@ -104,20 +104,7 @@ namespace LibraryManagementSystemAPI.Controllers
             {
                 return StatusCode(findMemberResult.ErrorCode, findMemberResult.Message);
             }
-            Result<bool> validationResult = await clsMember.ValidateDataAsync(updateMemberDTO, findMemberResult.Data.PersonInfo.NationalNo);
-            if (!validationResult.Success)
-            {
-                return StatusCode(validationResult.ErrorCode, validationResult.Message);
-            }
             findMemberResult.Data.IsActive = updateMemberDTO.IsActive;
-            findMemberResult.Data.PersonInfo.NationalNo = updateMemberDTO.PersonInfoDTO.NationalNo;
-            findMemberResult.Data.PersonInfo.FirstName = updateMemberDTO.PersonInfoDTO.FirstName;
-            findMemberResult.Data.PersonInfo.SecondName = updateMemberDTO.PersonInfoDTO.SecondName;
-            findMemberResult.Data.PersonInfo.ThirdName = updateMemberDTO.PersonInfoDTO.ThirdName;
-            findMemberResult.Data.PersonInfo.LastName = updateMemberDTO.PersonInfoDTO.LastName;
-            findMemberResult.Data.PersonInfo.Gender = (clsPerson.enGender)updateMemberDTO.PersonInfoDTO.Gender;
-            findMemberResult.Data.PersonInfo.Email = updateMemberDTO.PersonInfoDTO.Email;
-            findMemberResult.Data.PersonInfo.Phone = updateMemberDTO.PersonInfoDTO.Phone;
 
             Result<int> newResult = await findMemberResult.Data.SaveAsync();  
 
