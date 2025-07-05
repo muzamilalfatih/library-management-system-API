@@ -760,7 +760,7 @@ namespace SharedClasses
         public class ReservationDTO
         {
             public ReservationDTO(int reservationID, int memberID, int bookID, DateTime reservationDate,
-                string reservationStatus, int createdByUserID)
+                enReservationStatus reservationStatus, int createdByUserID)
             {
                 ReservationID = reservationID;
                 MemberID = memberID;
@@ -774,7 +774,7 @@ namespace SharedClasses
             public int MemberID { get; set; }
             public int BookID { get; set; }
             public DateTime ReservationDate { get; set; }
-            public string ReservationStatus { get; set; }
+            public enReservationStatus ReservationStatus { get; set; }
             public int CreatedByUserID { get; set; }
         }
         public class ReservationViewDTO

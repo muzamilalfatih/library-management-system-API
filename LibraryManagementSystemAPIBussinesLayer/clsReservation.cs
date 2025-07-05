@@ -112,7 +112,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
                 );
             }
 
-            if (result.Data.ReservationStatus == "Cancelled")
+            if (result.Data.ReservationStatus == enReservationStatus.Cancelled)
             {
                 return new Result<int>(
                     false,

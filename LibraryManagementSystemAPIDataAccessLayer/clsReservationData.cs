@@ -14,22 +14,6 @@ namespace LibraryManagementSystemAPIDataAccessLayer
 {
     public class clsReservationData
     {
-        static string GetStatusText(short status)
-        {
-            switch (status)
-            {
-                case 1:
-                    return "Pending";
-                case 2:
-                    return "Available";
-                case 3:
-                    return "Complete";
-                case 4:
-                    return "Cancelled";
-                default:
-                    return "UnKnown";
-            }
-        }
 
         public static async Task<Result<ReservationDTO>> GetReservationInfoByIDAsync(int reservationID)
         {
@@ -52,7 +36,7 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                                     (int)reader["MemberID"],
                                     (int)reader["BookID"],
                                     (DateTime)reader["ReservationDate"],
-                                    GetStatusText((short)reader["ReservationStatus"]),
+                                    (enReservationStatus)reader["ReservationStatus"],
                                     (int)reader["CreatedByUserID"]
                                 );
                                 return new Result<ReservationDTO>(true, "Reservation found successfully.", reservationDTO);
