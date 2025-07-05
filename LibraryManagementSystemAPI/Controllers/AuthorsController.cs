@@ -35,11 +35,7 @@ namespace LibraryManagementSystemAPI.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<AuthorDTO>> AddAuthor(AuthorDTO authorDTO)
         {
-            Result<bool> validationResult = await clsAuthor.VaidateData(authorDTO);
-            if (!validationResult.Success)
-            {
-                return StatusCode(validationResult.ErrorCode, validationResult.Message);
-            }
+            
             clsAuthor newAuthor = new clsAuthor(authorDTO, clsAuthor.enMode.AddNew);
             Result<int> savingResult = await newAuthor.SaveAsync();  
 
@@ -67,20 +63,9 @@ namespace LibraryManagementSystemAPI.Controllers
             {
                 return StatusCode(findAuthorResult.ErrorCode, findAuthorResult.Message);
             }
-            Result<bool> validationResult = await clsAuthor.VaidateData(authorDTO, findAuthorResult.Data.PersonInfo.NationalNo);
-            if (!validationResult.Success)
-            {
-                return StatusCode(validationResult.ErrorCode, validationResult.Message);
-            }
+            
 
-            findAuthorResult.Data.PersonInfo.NationalNo = authorDTO.PersonInfoDTO.NationalNo;
-            findAuthorResult.Data.PersonInfo.FirstName = authorDTO.PersonInfoDTO.FirstName;
-            findAuthorResult.Data.PersonInfo.SecondName = authorDTO.PersonInfoDTO.SecondName;
-            findAuthorResult.Data.PersonInfo.ThirdName = authorDTO.PersonInfoDTO.ThirdName;
-            findAuthorResult.Data.PersonInfo.LastName = authorDTO.PersonInfoDTO.LastName;
-            findAuthorResult.Data.PersonInfo.Gender = (clsPerson.enGender)authorDTO.PersonInfoDTO.Gender;
-            findAuthorResult.Data.PersonInfo.Email = authorDTO.PersonInfoDTO.Email;
-            findAuthorResult.Data.PersonInfo.Phone = authorDTO.PersonInfoDTO.Phone;
+            
 
             Result<int> savingResult = await findAuthorResult.Data.SaveAsync();  
 

@@ -158,7 +158,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
             return true;
         }
 
-        public async Task<Result<bool>> DeleteAsync()
+        public static async Task<Result<bool>> DeleteAsync(int PersonID)
         {
             return await clsPersonData.DeletePersonAsync(PersonID); // Async call
         }

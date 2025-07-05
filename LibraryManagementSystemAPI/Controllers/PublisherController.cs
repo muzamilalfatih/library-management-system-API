@@ -62,18 +62,7 @@ namespace LibraryManagementSystemAPI.Controllers
                 return StatusCode(result.ErrorCode, result.Message);
             }
 
-            string originalNationalNumber = result.Data.PDTO.PersonInfoDTO.NationalNo;
-
-            result.Data.PersonInfo.NationalNo = publisherDTO.PersonInfoDTO.NationalNo;
-            result.Data.PersonInfo.FirstName = publisherDTO.PersonInfoDTO.FirstName;
-            result.Data.PersonInfo.SecondName = publisherDTO.PersonInfoDTO.SecondName;
-            result.Data.PersonInfo.ThirdName = publisherDTO.PersonInfoDTO.ThirdName;
-            result.Data.PersonInfo.LastName = publisherDTO.PersonInfoDTO.LastName;
-            result.Data.PersonInfo.Gender = (clsPerson.enGender)publisherDTO.PersonInfoDTO.Gender;
-            result.Data.PersonInfo.Email = publisherDTO.PersonInfoDTO.Email;
-            result.Data.PersonInfo.Phone = publisherDTO.PersonInfoDTO.Phone;
-
-            Result<int> newResult = await result.Data.SaveAsync(originalNationalNumber); 
+            Result<int> newResult = await result.Data.SaveAsync(); 
 
             if (newResult.Success)
             {

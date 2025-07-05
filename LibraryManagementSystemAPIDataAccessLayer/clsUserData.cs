@@ -27,19 +27,13 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                             if (reader.Read())
                             {
                                 int personID = reader.GetInt32(reader.GetOrdinal("PersonID"));
-                                Result<PersonDTOs.PersonDTO> result = await clsPersonData.GetPersonInfoByIDAsync(personID);
-                                if (!result.Success)
-                                {
-                                    return new Result<UserDTO>(false, result.Message, null, result.ErrorCode);
-                                }
                                 var user = new UserDTO(
                                     reader.GetInt32(reader.GetOrdinal("UserID")),
                                     personID,
                                     reader.GetString(reader.GetOrdinal("UserName")),
                                     reader.GetString(reader.GetOrdinal("Password")),
                                     reader.GetInt32(reader.GetOrdinal("UserRoles")),
-                                    reader.GetBoolean(reader.GetOrdinal("IsActive")),
-                                    result.Data
+                                    reader.GetBoolean(reader.GetOrdinal("IsActive"))
                                 );
                                 return new Result<UserDTO>(true, "User found successfully.", user);
                             }
@@ -73,19 +67,13 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                             if (reader.Read())
                             {
                                 int personID = reader.GetInt32(reader.GetOrdinal("PersonID"));
-                                Result<PersonDTOs.PersonDTO> result = await clsPersonData.GetPersonInfoByIDAsync(personID);
-                                if (!result.Success)
-                                {
-                                    return new Result<UserDTO>(false, result.Message, null, result.ErrorCode);
-                                }
                                 var user = new UserDTO(
                                     reader.GetInt32(reader.GetOrdinal("UserID")),
                                     personID,
                                     reader.GetString(reader.GetOrdinal("UserName")),
                                     reader.GetString(reader.GetOrdinal("Password")),
                                     reader.GetInt32(reader.GetOrdinal("UserRoles")),
-                                    reader.GetBoolean(reader.GetOrdinal("IsActive")),
-                                    result.Data
+                                    reader.GetBoolean(reader.GetOrdinal("IsActive"))
                                 );
                                 return new Result<UserDTO>(true, "User found successfully.", user);
                             }

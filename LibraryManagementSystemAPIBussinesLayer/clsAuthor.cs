@@ -18,13 +18,11 @@ namespace LibraryManagementSystemAPIBussinesLayer
         public int ID { get; set; }
         public int PersonID { get; set; }
         public DateTime CreatedDate { get; set; }
-        public clsPerson PersonInfo { get; set; }
 
         public clsAuthor(AuthorDTO auhtorDTO, enMode mode = enMode.AddNew)
         {
             this.ID = auhtorDTO.AuthorID;
             this.PersonID = auhtorDTO.PersonID;
-            this.PersonInfo = new clsPerson(auhtorDTO.PersonInfoDTO, (clsPerson.enMode)mode);
             this.CreatedDate = auhtorDTO.CreatedDate;
             _Mode = mode;
         }
@@ -33,7 +31,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             get
             {
-                return new AuthorDTO(this.ID, this.PersonID, this.CreatedDate, this.PersonInfo.PDTO);
+                return new AuthorDTO(this.ID, this.PersonID, this.CreatedDate);
             }
         }
 
@@ -55,28 +53,15 @@ namespace LibraryManagementSystemAPIBussinesLayer
 
         private async Task<Result<int>> _AddNewAuthorAsync()
         {
-            Result<int> result = await PersonInfo.SaveAsync();  // Make it async
-            if (!result.Success)
-            {
-                return result;
-            }
-
-            this.PersonID = result.Data;
 
             return await clsAuthorData.AddNewAuthorAsync(this.PersonID); // Make it async
         }
-        public static async Task<Result<bool>> VaidateData(AuthorDTO authorDTO)
-        {
-            return await clsPerson.ValidateDataAsync(authorDTO.PersonInfoDTO);
-        }
-        public static async Task<Result<bool>> VaidateData(AuthorDTO authorDTO, string currentNationalNumber)
-        {
-            return await clsPerson.ValidateDataAsync(authorDTO.PersonInfoDTO, currentNationalNumber);
-        }
-        private async Task<Result<int>> _UpdateAuthorAsync( )
-        {
-            return await PersonInfo.SaveAsync();
-        }
+        
+       
+        //private async Task<Result<int>> _UpdateAuthorAsync( )
+        //{
+            
+        //}
         public static async Task<Result<bool>> DeleteAuthorAsync(int AuthorID)
         {
             if (AuthorID <= 0)
@@ -141,7 +126,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
                     return result;
 
                 case enMode.Update:
-                    return await _UpdateAuthorAsync(); 
+                    //return await _UpdateAuthorAsync(); 
 
                 default:
                     return new Result<int>(false, "An unexpected error occurred on the server.", -1, 500);

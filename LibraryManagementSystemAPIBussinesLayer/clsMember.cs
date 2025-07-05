@@ -56,9 +56,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
             this.MemberID = memberDTO.MemberID;
             this.IsActive = memberDTO.IsActive;
             this.PersonID = memberDTO.PersonID;
-            this.PersonInfo = new clsPerson(memberDTO.PersonInfoDTO, (clsPerson.enMode)mode);
             this.CreatedByUserID = memberDTO.CreatedByUserID;
-            this.CreatedByUserInfo = new clsUser(memberDTO.CreatedByUserInfoDTO, (clsUser.enMode)mode);
             this.CreatedDate = memberDTO.CreatedDate;
             this.MembershipInfo = new clsMembership(memberDTO.MembershipInfoDTO, (clsMembership.enMode)mode);
             _Mode = enMode.Update;
@@ -88,8 +86,7 @@ namespace LibraryManagementSystemAPIBussinesLayer
         {
             get
             {
-                return new FullMemberDTO(this.MemberID, this.PersonID, this.CreatedDate, this.IsActive, this.CreatedByUserID, this.PersonInfo.PDTO,
-                    this.CreatedByUserInfo.UDTO, this.MembershipInfo.FMSDTO);
+                return new FullMemberDTO(this.MemberID, this.PersonID, this.CreatedDate, this.IsActive, this.CreatedByUserID, this.MembershipInfo.FMSDTO);
             }
         }
         public MemberResponseDataDTO RespnonsDataDTO

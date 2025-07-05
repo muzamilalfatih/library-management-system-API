@@ -54,18 +54,7 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                             if (reader.Read())
                             {
                                 int personID = reader.GetInt32("PersonID");
-                                Result<PersonDTOs.PersonDTO> personResult = await clsPersonData.GetPersonInfoByIDAsync(personID);
-                                if (!personResult.Success)
-                                {
-                                    return new Result<FullMemberDTO>(false, personResult.Message, null, personResult.ErrorCode);
-                                }
-
                                 int createdByUserID = reader.GetInt32("CreatedByUserID");
-                                Result<UserDTOS.UserDTO> userResult = await clsUserData.GetUserInfoByUserIDAsync(createdByUserID);
-                                if (!userResult.Success)
-                                {
-                                    return new Result<FullMemberDTO>(false, userResult.Message, null, userResult.ErrorCode);
-                                }
                                 Result<MembershipDTOs.FullMembershipDTO> membershipResult = await clsMembershipData.GetMembershipByMemberIDAsync(memberID);
                                 if (!membershipResult.Success)
                                 {
@@ -77,8 +66,6 @@ namespace LibraryManagementSystemAPIDataAccessLayer
                                     reader.GetDateTime(reader.GetOrdinal("CreatedDate")),
                                     reader.GetBoolean(reader.GetOrdinal("IsActive")),
                                     createdByUserID,
-                                    personResult.Data,
-                                    userResult.Data,
                                     membershipResult.Data
                                 );
                                 return new Result<FullMemberDTO>(true, "Member found successfully.", member);
